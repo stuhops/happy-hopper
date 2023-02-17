@@ -5,4 +5,9 @@ import { Component } from '@angular/core';
   templateUrl: './play.component.html',
   styleUrls: ['./play.component.scss'],
 })
-export class PlayComponent {}
+export class PlayComponent {
+  canvasDimensions = {
+    height: 1024,
+    width: 1024,
+  };
+}
