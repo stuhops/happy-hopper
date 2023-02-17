@@ -4,9 +4,10 @@ import { AppRoutingModule } from './app.router';
 
 import { AppComponent } from './components/app/app.component';
 import { HomeComponent } from './components/home/home.component';
+import { PlayComponent } from './components/play/play.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent],
+  declarations: [AppComponent, HomeComponent, PlayComponent],
   imports: [AppRoutingModule, BrowserModule],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
+import { PlayComponent } from './components/play/play.component';
 
 const routes: Routes = [
-  {
-    title: 'Home',
-    path: '**',
-    component: HomeComponent,
-  },
+  { path: 'play', title: 'Play Frogger', component: PlayComponent },
+  { path: '', title: 'Frogger Home', component: HomeComponent },
+  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({
