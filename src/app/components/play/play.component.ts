@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Controls } from 'src/app/models/controls.model';
+import { Game } from 'src/app/models/game.model';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -7,9 +9,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./play.component.scss'],
 })
 export class PlayComponent {
+  @Input() controls: Controls = new Controls();
+  @Input() game: Game = new Game({ level: 0, levels: 2 });
   env = environment;
-  canvasDimensions = {
-    height: 1024,
-    width: 1024,
-  };
 }
