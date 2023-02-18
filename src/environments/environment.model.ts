@@ -1,3 +1,3 @@
 export interface EnvironmentInterface {
-  assetPrefix: string;
+  assetPrefix: 'assets/' | string;
 }

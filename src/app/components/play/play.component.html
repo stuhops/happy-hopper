@@ -1,13 +1,9 @@
 <div class="contents">
-  <canvas
-    class="game-canvas"
-    [width]="game.width"
-    [height]="game.height"
-  ></canvas>
+  <canvas #gameCanvas class="game-canvas" [width]="Game.SQR_SIZE" [height]="Game.SQR_SIZE"></canvas>
   <button routerLink="">Main Menu</button>
 
   <audio id="background-music" autoplay loop>
-    <source src="{{env.assetPrefix}}background.mp3" type="audio/mpeg" />
+    <source src="{{ env.assetPrefix }}background.mp3" type="audio/mpeg" />
     Your browser does not support the audio element.
   </audio>
 </div>

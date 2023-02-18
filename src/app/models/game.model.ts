@@ -1,14 +1,14 @@
+import { Character } from './character.model';
+import { Controls } from './controls.model';
+
 export interface GameParams {
   // Required
   levels: number;
+  character: Character;
 
   // Optional
-  rows?: 14 | number;
   gameClockAmount?: 100000 | number;
-  waitTimerAmount?: 1000 | number;
-
-  height?: 1024 | number;
-  width?: 1024 | number;
+  waitTimer?: 1000 | number;
 
   score?: 100 | number;
   level?: number;
@@ -18,16 +18,19 @@ export interface GameParams {
   checkCollisions?: true | boolean;
   // obstacles?: Obstacle[];
   // guts?: Guts[];
+
+  controls?: Controls;
 }
 
 export class Game {
-  height: 1024 | number;
-  width: 1024 | number;
+  static SQR_SIZE = 1024;
+  static ROWS = 14;
+
+  character: Character;
 
   levels: number;
-  rows: 14 | number;
   gameClockInitAmount: 100000 | number;
-  waitTimerAmount: 1000 | number;
+  waitTimer: 1000 | number;
 
   score: 100 | number;
   level: number;
@@ -38,13 +41,13 @@ export class Game {
   // obstacles: Obstacle[];
   // guts: Guts[];
 
+  controls: Controls;
+
   constructor(params: GameParams) {
     this.levels = params.levels ?? 2;
-    this.rows = params.rows ?? 14;
+    this.character = params.character;
     this.gameClockInitAmount = params.gameClockAmount ?? 100000;
-    this.waitTimerAmount = params.waitTimerAmount ?? 1000;
-    this.height = params.height ?? 1024;
-    this.width = params.width ?? 1024;
+    this.waitTimer = params.waitTimer ?? 1000;
     this.score = params.score ?? 100;
     this.level = params.level ?? 0;
     this.lives = params.lives ?? 3;
@@ -53,5 +56,6 @@ export class Game {
     this.checkCollisions = params.checkCollisions ?? true;
     // obstacles: Obstacle[];
     // guts: Guts[];
+    this.controls = params.controls ?? new Controls();
   }
 }
