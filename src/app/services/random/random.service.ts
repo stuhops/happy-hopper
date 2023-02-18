@@ -1,20 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Coords } from 'src/app/models/coords.model';
+import { BasicStats } from 'src/app/models/stats.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RandomService {
-  nextDouble(): number {
+  static nextDouble(): number {
     return Math.random();
   }
 
-  nextRange(min: number, max: number): number {
+  static nextRange(min: number, max: number): number {
     const range = max - min;
     return Math.floor(Math.random() * range + min);
   }
 
-  nextCircleVector(): Coords {
+  static nextCircleVector(): Coords {
     const angle = Math.random() * 2 * Math.PI;
     return {
       x: Math.cos(angle),
@@ -22,7 +23,7 @@ export class RandomService {
     };
   }
 
-  nextThrustVector(angle: number): Coords {
+  static nextThrustVector(angle: number): Coords {
     const randomAngle = ((Math.random() * 1) / 3) * Math.PI;
     const nextAngle = randomAngle + angle - (1 / 6) * Math.PI;
     return {
@@ -31,15 +32,15 @@ export class RandomService {
     };
   }
 
-  nextGaussianPositive(mean: number, stdDev: number): number {
-    const next = nextGaussian(mean, stdDev);
+  static nextGaussianPositive(stats: BasicStats): number {
+    const next = RandomService.nextGaussian(stats);
     return Math.abs(next);
   }
 
   //
   // Generate a normally distributed random number.
   //
-  nextGaussian(mean: number, stdDev: number): number {
+  static nextGaussian(stats: BasicStats): number {
     let x1 = 0;
     let x2 = 0;
     let y1 = 0;
@@ -47,7 +48,7 @@ export class RandomService {
     let z = 0;
 
     if (y2) {
-      const next = mean + y2 * stdDev;
+      const next = stats.mean + y2 * stats.stdDev;
       y2 = null;
       return next;
     }
@@ -62,6 +63,6 @@ export class RandomService {
     y1 = x1 * z;
     y2 = x2 * z;
 
-    return mean + y1 * stdDev;
+    return stats.mean + y1 * stats.stdDev;
   }
 }
