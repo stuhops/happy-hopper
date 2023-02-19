@@ -11,6 +11,59 @@ export class GraphicService {
     canvasContext.context.clearRect(0, 0, canvasContext.canvas.width, canvasContext.canvas.height);
   }
 
+  static drawBox(
+    canvas: CanvasContext,
+    options: {
+      position: Coords;
+      size: WHSize;
+      lineWidth?: number;
+      fillStyle?: string;
+      strokeStyle?: string;
+    },
+  ): void {
+    canvas.context.save();
+    canvas.context.lineWidth = options.lineWidth ?? 0;
+    canvas.context.fillStyle = options.fillStyle ?? 'black';
+    canvas.context.strokeStyle = options.strokeStyle ?? 'black';
+
+    canvas.context.beginPath();
+    canvas.context.moveTo(options.position.x, options.position.y);
+
+    canvas.context.lineTo(options.position.x + options.size.width, options.position.y);
+    canvas.context.lineTo(options.position.x + options.size.width, options.position.y);
+    canvas.context.lineTo(
+      options.position.x + options.size.width,
+      options.position.y + options.size.height,
+    );
+    canvas.context.lineTo(options.position.x, options.position.y + options.size.height);
+
+    canvas.context.closePath();
+    if (options.fillStyle) canvas.context.fill();
+    if (options.strokeStyle) canvas.context.stroke();
+
+    canvas.context.restore();
+  }
+
+  static drawText(
+    canvas: CanvasContext,
+    options: {
+      lineWidth: number;
+      text: string;
+      font?: string;
+      fillStyle?: string;
+      position?: Coords;
+    },
+  ): void {
+    canvas.context.save();
+
+    options['fillStyle'] = options['fillStyle'] ?? 'black';
+    options['font'] = options['font'] ?? '32px Arial';
+    options['position'] = options['position'] ?? { x: 0, y: 0 };
+    canvas.context.fillText(options.text, options.position.x, options.position.y);
+
+    canvas.context.restore();
+  }
+
   static drawTexture(
     canvas: CanvasContext,
     image: any, // TODO

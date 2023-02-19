@@ -1,8 +1,8 @@
 import { Coords } from './coords.model';
 
 export interface PositionParams extends Coords {
-  angle: number; // In radians
-  max: Coords;
+  angle?: number; // In radians
+  max?: Coords;
   min?: Coords;
   nextCenter?: Coords;
   startCenter?: Coords;
@@ -12,17 +12,18 @@ export class Position {
   x: number;
   y: number;
   angle: number; // In Radians
-  min: Coords;
-  max: Coords;
-  nextCenter: Coords;
-  startCenter: Coords;
+  min?: Coords;
+  max?: Coords;
+  nextCenter?: Coords;
+  startCenter?: Coords;
 
   constructor(params: PositionParams) {
     this.x = params.x;
     this.y = params.y;
-    this.angle = params.angle;
+    this.angle = params.angle ?? 0;
     this.min = params.min ?? { x: 0, y: 0 };
-    (this.max = params.max), (this.startCenter = { x: this.x, y: this.y });
+    this.max = params.max;
+    this.startCenter = { x: this.x, y: this.y };
     this.nextCenter = this.startCenter;
   }
 
@@ -44,11 +45,8 @@ export class Position {
   }
 
   private _inBounds(coords: Coords): boolean {
-    return (
-      coords.x <= this.max.x &&
-      coords.x >= this.min.x &&
-      coords.y <= this.max.y &&
-      coords.y >= this.min.y
-    );
+    const inMin: boolean = !!(!this.min || (coords.x >= this.min.x && coords.y >= this.min.y));
+    const inMax: boolean = !!(!this.max || (coords.x <= this.max.x && coords.y <= this.max.y));
+    return inMin && inMax;
   }
 }

@@ -88,6 +88,8 @@ export class Character {
 
   ////////////////// Private /////////////////////
   private _move(elapsedTime: number): void {
+    if (!this.position.nextCenter) throw Error('Character must have a next center pos');
+
     this.position.x += this.move.drift.x * elapsedTime;
     if (this.move.direction) {
       this.move.timer -= elapsedTime;
