@@ -17,16 +17,17 @@ interface GameClockParams {
 
 export interface StatusBarParams {
   size: WHSize;
-  position?: { x: 0; y: 0 } | Coords;
-  lives?: 3 | number;
+  gameLives: BehaviorSubject<number>;
   score: BehaviorSubject<number>;
   gameClock: GameClockParams;
+  position?: { x: 0; y: 0 } | Coords;
 }
 
 export class StatusBar {
   static LIVES_OFFSET: Coords = { x: 80, y: 0 };
   size: WHSize;
   position: Coords = { x: 0, y: 0 };
+  gameLives: BehaviorSubject<number>;
   lives: StatusBarSpriteElement[] = [];
   score: BehaviorSubject<number>;
   gameClock!: TimerDisplay;
@@ -35,7 +36,8 @@ export class StatusBar {
     this.size = params.size;
     this.position = params.position ?? { x: 0, y: 0 };
     this.score = params.score;
-    this._initLives(params.lives ?? 3);
+    this.gameLives = params.gameLives;
+    this._initLives(params.gameLives.getValue());
     this._initGameClock(params.gameClock);
   }
 

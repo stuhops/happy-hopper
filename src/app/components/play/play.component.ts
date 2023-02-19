@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { Game } from 'src/app/models/game.model';
+import { StatusBar } from 'src/app/models/status-bar.model';
 import { GameInitService } from 'src/app/services/game-init/game-init.service';
 import { environment } from 'src/environments/environment';
 
@@ -12,6 +13,7 @@ export class PlayComponent {
   @ViewChild('gameCanvas') gameCanvas!: HTMLCanvasElement;
   context!: CanvasRenderingContext2D;
   game!: Game;
+  statusBar!: StatusBar;
   env = environment;
   inputBuffer: Record<string, string> = {};
   lastCycle: number = performance.now();
@@ -22,8 +24,9 @@ export class PlayComponent {
 
   ngAfterViewInit(): void {
     this.watchForInput();
-    this.gameInitService.init();
     this.refreshContext();
+    this.game = this.gameInitService.game();
+    this.statusBar = this.gameInitService.statusBar(this.game);
   }
 
   processInput(): void {

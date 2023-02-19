@@ -5,21 +5,22 @@ import { Move } from 'src/app/models/move.model';
 import { Position } from 'src/app/models/position.model';
 import { SpriteSheet } from 'src/app/models/sprite-sheet.model';
 import { Sprite } from 'src/app/models/sprite.model';
+import { StatusBar } from 'src/app/models/status-bar.model';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GameInitService {
-  init(): Game {
+  game(): Game {
     return new Game({
       level: 0,
       levels: 2,
-      character: this.initializeFrog(),
+      character: this.frog(),
     });
   }
 
-  initializeFrog(): Character {
+  frog(): Character {
     const charRadius = Game.SQR_SIZE / Game.ROWS / 2;
 
     const gameSpritesSheet = new SpriteSheet({
@@ -74,6 +75,16 @@ export class GameInitService {
     });
 
     return frog;
+  }
+
+  statusBar(game: Game): StatusBar {
+    return new StatusBar({
+      size: { width: Game.SQR_SIZE, height: Game.SQR_SIZE / Game.ROWS },
+      gameLives: game.lives,
+      score: game.score,
+      gameClock: { clock: game.gameClock, clockInit: game.gameClockInitAmount },
+      position: { x: 0, y: 0 },
+    });
   }
 
   // //------------------------------------------------------------------
