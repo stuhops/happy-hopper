@@ -15,11 +15,11 @@ export class GameInitService {
     return new Game({
       level: 0,
       levels: 2,
-      character: this._initializeFrog(),
+      character: this.initializeFrog(),
     });
   }
 
-  private _initializeFrog(): Character {
+  initializeFrog(): Character {
     const charRadius = Game.SQR_SIZE / Game.ROWS / 2;
 
     const gameSpritesSheet = new SpriteSheet({

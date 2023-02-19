@@ -1,3 +1,4 @@
+import { BehaviorSubject } from 'rxjs';
 import { Character } from './character.model';
 import { Controls } from './controls.model';
 
@@ -32,11 +33,11 @@ export class Game {
   gameClockInitAmount: 100000 | number;
   waitTimer: 1000 | number;
 
-  score: 100 | number;
+  score: BehaviorSubject<number>;
   level: number;
-  lives: 3 | number;
-  gameOver: false | boolean;
-  gameClock: 100000 | number;
+  lives: BehaviorSubject<number>;
+  gameOver: BehaviorSubject<boolean>;
+  gameClock: BehaviorSubject<number>;
   checkCollisions: true | boolean;
   // obstacles: Obstacle[];
   // guts: Guts[];
@@ -48,11 +49,11 @@ export class Game {
     this.character = params.character;
     this.gameClockInitAmount = params.gameClockAmount ?? 100000;
     this.waitTimer = params.waitTimer ?? 1000;
-    this.score = params.score ?? 100;
+    this.score = new BehaviorSubject<number>(params.score ?? 100);
     this.level = params.level ?? 0;
-    this.lives = params.lives ?? 3;
-    this.gameOver = !!params.gameOver;
-    this.gameClock = params.gameClock ?? this.gameClockInitAmount;
+    this.lives = new BehaviorSubject<number>(params.lives ?? 3);
+    this.gameOver = new BehaviorSubject<boolean>(!!params.gameOver);
+    this.gameClock = new BehaviorSubject<number>(params.gameClock ?? this.gameClockInitAmount);
     this.checkCollisions = params.checkCollisions ?? true;
     // obstacles: Obstacle[];
     // guts: Guts[];
