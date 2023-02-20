@@ -25,13 +25,13 @@ export class StatusBar {
   position: Coords = { x: 0, y: 0 };
   gameLives: BehaviorSubject<number>;
   lives: StatusBarSpriteElement[] = [];
-  score: BehaviorSubject<number>;
+  _score: BehaviorSubject<number>;
   timerDisplay!: TimerDisplay;
 
   constructor(params: StatusBarParams) {
     this.size = params.size;
     this.position = params.position ?? { x: 0, y: 0 };
-    this.score = params.score;
+    this._score = params.score;
     this.gameLives = params.gameLives;
     this._initLives(params.gameLives.getValue());
     this._initTimerDisplay(params.gameClock);
@@ -50,7 +50,16 @@ export class StatusBar {
       if (this.lives.length) this.timerDisplay.reset();
       // TODO: What if we are out of lives
     }
+    if (this.gameLives.getValue() !== this.lives.length) this._initLives(this.gameLives.getValue());
     this._updateScore(elapsedTime);
+  }
+
+  get score(): number {
+    return this._score.getValue();
+  }
+
+  set score(next: number) {
+    this._score.next(next);
   }
 
   private _initLives(amount: number): void {
@@ -100,7 +109,7 @@ export class StatusBar {
 
   private _renderScore(canvas: CanvasContext): void {
     GraphicService.drawText(canvas, {
-      text: `Score: ${this.score.getValue()}`,
+      text: `Score: ${this.score}`,
       lineWidth: 1,
       font: '32px Arial',
       fillStyle: '#3bffff',
@@ -114,7 +123,6 @@ export class StatusBar {
   }
 
   private _updateScore(elapsedTime: number): void {
-    const next: number = Math.max(this.score.getValue() - elapsedTime, 0);
-    this.score.next(next);
+    this.score = Math.max(this.score - elapsedTime, 0);
   }
 }

@@ -6,7 +6,8 @@ export enum CollisionType {
 }
 
 export interface Collision {
+  drift: Coords; // Where the ground is moving
   type?: CollisionType;
-  drift?: Coords;
-  points?: number;
+  points?: number; // When you get points from touching something
+  column?: number; // For use with win condition
 }

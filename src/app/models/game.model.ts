@@ -16,7 +16,6 @@ export interface GameParams {
   gameOver?: false | boolean;
   gameOverClock?: Clock;
   clock?: Clock;
-  checkCollisions?: true | boolean;
   // obstacles?: Obstacle[];
   // guts?: Guts[];
 }
@@ -28,33 +27,37 @@ export class Game {
   character: Character;
 
   levels: number;
-  waitTimer: 1000 | number;
+  waitTimer: Clock;
 
-  score: BehaviorSubject<number>;
+  _score: BehaviorSubject<number>;
   level: number;
   lives: BehaviorSubject<number>;
   won: boolean;
   gameOver: boolean;
   gameOverClock: Clock;
   clock: Clock;
-  checkCollisions: true | boolean;
   board: any; // TODO
   // obstacles: Obstacle[];
-  // guts: Guts[];
 
   constructor(params: GameParams) {
     this.levels = params.levels ?? 2;
     this.character = params.character;
-    this.waitTimer = params.waitTimer ?? 1000;
-    this.score = new BehaviorSubject<number>(params.score ?? 100);
+    this.waitTimer = new Clock({ timer: 0, initialTime: params.waitTimer ?? 1000 });
+    this._score = new BehaviorSubject<number>(params.score ?? 100);
     this.level = params.level ?? 0;
     this.lives = new BehaviorSubject<number>(params.lives ?? 3);
     this.won = !!params.won;
     this.gameOver = !!params.gameOver;
     this.gameOverClock = params.gameOverClock ?? new Clock({ initialTime: 3000 });
     this.clock = params.clock ?? new Clock();
-    this.checkCollisions = params.checkCollisions ?? true;
     // obstacles: Obstacle[];
-    // guts: Guts[];
+  }
+
+  get score(): number {
+    return this._score.getValue();
+  }
+
+  set score(next: number) {
+    this._score.next(next);
   }
 }

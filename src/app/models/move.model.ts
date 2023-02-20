@@ -24,4 +24,10 @@ export class Move {
     this.ppms = params.distance / this.timer;
     this.drift = params.drift ?? { x: 0, y: 0 };
   }
+
+  reset(): void {
+    this.direction = null;
+    this.timer = this.baseTimer;
+    this.drift = { x: 0, y: 0 };
+  }
 }

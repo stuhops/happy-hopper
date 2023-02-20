@@ -1,6 +1,7 @@
 import { CanvasContext } from './canvas-context.model';
 import { Direction } from './directions.model';
 import { Move } from './move.model';
+import { ParticleSystem } from './particle-system.model';
 import { Position } from './position.model';
 import { Circle } from './shapes.model';
 import { Sprite } from './sprite.model';
@@ -25,14 +26,18 @@ export class Character {
   move: Move;
   sprite: Sprite;
   dyingSprite: Sprite;
+  guts: ParticleSystem | null = null;
   audio?: HTMLAudioElement;
 
   dead: boolean = false;
   dyingTimer: number | null;
 
+  initialPosition: Position;
+
   constructor(params: CharacterParams) {
     this.radius = params.radius;
     this.position = params.position;
+    this.initialPosition = new Position({ ...this.position });
     this.audio = params.audio;
     this.move = params.move;
     this.sprite = params.sprite;
@@ -57,21 +62,29 @@ export class Character {
   }
 
   /////////////////  Public //////////////////////
-  update(elapsedTime: number): void {
-    if (this.isDying) this._updateDying(elapsedTime);
-    else if (!this.dead) this._move(elapsedTime);
+  render(canvas: CanvasContext): void {
+    if (this.isDying) {
+      this.dyingSprite.render(this.position, this.radius, canvas);
+      this.guts?.render(canvas);
+    } else if (!this.dead) this.sprite.render(this.position, this.radius, canvas);
   }
 
-  render(canvas: CanvasContext): void {
-    let toRender: Sprite | null = null;
-    if (this.isDying) toRender = this.dyingSprite;
-    else if (!this.dead) toRender = this.sprite;
-
-    toRender?.render(this.position, this.radius, canvas);
+  reset(): void {
+    this.dead = false;
+    this.dyingTimer = null;
+    this.move.reset();
+    this.position = new Position({ ...this.initialPosition });
   }
 
   startDying(timer?: number): void {
     this.dyingTimer = timer ?? Character.DEATH_LENGTH;
+    this.guts = new ParticleSystem({
+      image: null, // TODO
+      center: this.position,
+      size: { mean: 20, stdDev: 5 },
+      speed: { mean: 0, stdDev: 0.2 },
+      lifetime: { mean: 1000, stdDev: 100 },
+    });
   }
 
   setMove(dir: Direction | null): void {
@@ -87,6 +100,11 @@ export class Character {
 
     this.move.direction = dir;
     this._startMoveAudio();
+  }
+
+  update(elapsedTime: number): void {
+    if (this.isDying) this._updateDying(elapsedTime);
+    else if (!this.dead) this._move(elapsedTime);
   }
 
   ////////////////// Private /////////////////////
@@ -129,11 +147,13 @@ export class Character {
     if (!this.dyingTimer) return;
 
     this.dyingTimer -= elapsedTime;
+    this.guts?.update(elapsedTime);
     this.position.offset({ x: 0, y: elapsedTime / 100 });
 
     if (this.dyingTimer > 0) return;
 
     this.dyingTimer = null;
+    this.guts = null;
     this.dead = true;
   }
 }

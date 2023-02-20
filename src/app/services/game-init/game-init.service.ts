@@ -89,7 +89,7 @@ export class GameInitService {
     return new StatusBar({
       size: { width: Game.SQR_SIZE, height: Game.SQR_SIZE / Game.ROWS },
       gameLives: game.lives,
-      score: game.score,
+      score: game._score,
       gameClock: game.clock,
       position: { x: 0, y: 0 },
     });
