@@ -1,3 +1,5 @@
+import { environment } from 'src/environments/environment';
+
 export interface ControlsParams {
   up?: 'ArrowUp' | string;
   down?: 'ArrowDown' | string;
@@ -16,5 +18,11 @@ export class Controls {
     this.down = params?.down ?? this.down;
     this.left = params?.left ?? this.left;
     this.right = params?.right ?? this.right;
+  }
+
+  toLocalStorage(): void {
+    const data: ControlsParams = { ...this };
+    const json: string = JSON.stringify(data);
+    localStorage.setItem(environment.controlsKey, json);
   }
 }

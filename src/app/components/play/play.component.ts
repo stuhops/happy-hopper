@@ -1,7 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
+import { CanvasContext } from 'src/app/models/canvas-context.model';
+import { Controls } from 'src/app/models/controls.model';
 import { Game } from 'src/app/models/game.model';
 import { StatusBar } from 'src/app/models/status-bar.model';
 import { GameInitService } from 'src/app/services/game-init/game-init.service';
+import { GraphicService } from 'src/app/services/graphic/graphic.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -11,9 +14,12 @@ import { environment } from 'src/environments/environment';
 })
 export class PlayComponent {
   @ViewChild('gameCanvas') gameCanvas!: HTMLCanvasElement;
-  context!: CanvasRenderingContext2D;
+  canvasContext!: CanvasContext;
+
+  controls!: Controls;
   game!: Game;
   statusBar!: StatusBar;
+
   env = environment;
   inputBuffer: Record<string, string> = {};
   lastCycle: number = performance.now();
@@ -24,7 +30,8 @@ export class PlayComponent {
 
   ngAfterViewInit(): void {
     this.watchForInput();
-    this.refreshContext();
+    this.refreshCanvasContext();
+    this.controls = this.gameInitService.controls();
     this.game = this.gameInitService.game();
     this.statusBar = this.gameInitService.statusBar(this.game);
   }
@@ -40,10 +47,11 @@ export class PlayComponent {
     }
   }
 
-  refreshContext(): void {
+  refreshCanvasContext(): void {
     const context = this.gameCanvas.getContext('2d');
     if (!context) throw Error('Must have 2d context in the play component');
-    this.context = context;
+    this.canvasContext = { canvas: this.gameCanvas, context };
+    GraphicService.clearCanvas(this.canvasContext);
   }
 
   watchForInput(): void {

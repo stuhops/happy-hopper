@@ -4,4 +4,5 @@ export interface EnvironmentInterface {
     key: 'frogger-scores' | string;
     limit: 5 | number;
   };
+  controlsKey: 'frogger-controls' | string;
 }
