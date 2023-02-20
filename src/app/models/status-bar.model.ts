@@ -2,6 +2,7 @@ import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { GraphicService } from '../services/graphic/graphic.service';
 import { CanvasContext } from './canvas-context.model';
+import { Clock } from './clock.model';
 import { Coords } from './coords.model';
 import { Position } from './position.model';
 import { SpriteSheet } from './sprite-sheet.model';
@@ -10,16 +11,11 @@ import { StatusBarSpriteElement } from './status-bar-sprite-element.model';
 import { TimerDisplay } from './timer-display.model';
 import { WHSize } from './wh-size.model';
 
-interface GameClockParams {
-  clock: BehaviorSubject<number>;
-  clockInit: number;
-}
-
 export interface StatusBarParams {
   size: WHSize;
   gameLives: BehaviorSubject<number>;
   score: BehaviorSubject<number>;
-  gameClock: GameClockParams;
+  gameClock: Clock;
   position?: { x: 0; y: 0 } | Coords;
 }
 
@@ -30,7 +26,7 @@ export class StatusBar {
   gameLives: BehaviorSubject<number>;
   lives: StatusBarSpriteElement[] = [];
   score: BehaviorSubject<number>;
-  gameClock!: TimerDisplay;
+  timerDisplay!: TimerDisplay;
 
   constructor(params: StatusBarParams) {
     this.size = params.size;
@@ -38,20 +34,20 @@ export class StatusBar {
     this.score = params.score;
     this.gameLives = params.gameLives;
     this._initLives(params.gameLives.getValue());
-    this._initGameClock(params.gameClock);
+    this._initTimerDisplay(params.gameClock);
   }
 
   render(canvas: CanvasContext): void {
     this.lives.forEach((life) => life.render(canvas));
     this._renderScore(canvas);
-    this.gameClock.render(canvas);
+    this.timerDisplay.render(canvas);
   }
 
   update(elapsedTime: number): void {
     const outOfTime: boolean = this._updateGameClock(elapsedTime);
     if (outOfTime) {
       this.lives.pop();
-      if (this.lives.length) this.gameClock.reset();
+      if (this.lives.length) this.timerDisplay.reset();
       // TODO: What if we are out of lives
     }
     this._updateScore(elapsedTime);
@@ -90,15 +86,14 @@ export class StatusBar {
     this.lives = lives;
   }
 
-  private _initGameClock(params: GameClockParams): void {
-    this.gameClock = new TimerDisplay({
+  private _initTimerDisplay(gameClock: Clock): void {
+    this.timerDisplay = new TimerDisplay({
       size: { width: this.size.width * 0.3 * 0.85, height: this.size.height / 2 }, // TODO: give a better explanation for these calcs
       position: new Position({
         x: this.size.width * 0.7,
         y: this.position.y + this.size.height / 4,
       }),
-      timer: params.clock,
-      initialTimer: params.clockInit,
+      clock: gameClock,
       // audio: null, // TODO
     });
   }
@@ -114,8 +109,8 @@ export class StatusBar {
   }
 
   private _updateGameClock(elapsedTime: number): boolean {
-    this.gameClock.update(elapsedTime);
-    return !(this.gameClock.timer.getValue() > 0);
+    this.timerDisplay.update(elapsedTime);
+    return !(this.timerDisplay.clock.timer > 0);
   }
 
   private _updateScore(elapsedTime: number): void {

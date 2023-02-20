@@ -9,19 +9,12 @@ import { SpriteSheet } from 'src/app/models/sprite-sheet.model';
 import { Sprite } from 'src/app/models/sprite.model';
 import { StatusBar } from 'src/app/models/status-bar.model';
 import { environment } from 'src/environments/environment';
-import { Controls } from 'src/app/models/controls.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GameInitService {
   constructor(private _recordsService: RecordsService) {}
-
-  controls(): Controls {
-    const localControlsJSON: string | null = localStorage.getItem(environment.controlsKey);
-    const params = localControlsJSON ? JSON.parse(localControlsJSON) : {};
-    return new Controls(params);
-  }
 
   frog(): Character {
     const charRadius = Game.SQR_SIZE / Game.ROWS / 2;
@@ -97,7 +90,7 @@ export class GameInitService {
       size: { width: Game.SQR_SIZE, height: Game.SQR_SIZE / Game.ROWS },
       gameLives: game.lives,
       score: game.score,
-      gameClock: { clock: game.gameClock, clockInit: game.gameClockInitAmount },
+      gameClock: game.clock,
       position: { x: 0, y: 0 },
     });
   }
@@ -161,7 +154,7 @@ export class GameInitService {
 // game.loader = (function() {
 //     let scriptOrder = [
 //         {
-//             scripts: ['graphics', 'gameLoop', 'images'],
+//             scripts: ['gameLoop', 'images'],
 //             message: 'Foundation loaded',
 //             onComplete: null
 //         }, {

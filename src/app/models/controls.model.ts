@@ -20,6 +20,12 @@ export class Controls {
     this.right = params?.right ?? this.right;
   }
 
+  static FromLocalStorage(): Controls {
+    const localControlsJSON: string | null = localStorage.getItem(environment.controlsKey);
+    const params = localControlsJSON ? JSON.parse(localControlsJSON) : {};
+    return new Controls(params);
+  }
+
   toLocalStorage(): void {
     const data: ControlsParams = { ...this };
     const json: string = JSON.stringify(data);

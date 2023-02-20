@@ -1,9 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { CanvasContext } from 'src/app/models/canvas-context.model';
-import { Controls } from 'src/app/models/controls.model';
 import { Game } from 'src/app/models/game.model';
 import { StatusBar } from 'src/app/models/status-bar.model';
 import { GameInitService } from 'src/app/services/game-init/game-init.service';
+import { GameLoopService } from 'src/app/services/game-loop/game-loop.service';
 import { GraphicService } from 'src/app/services/graphic/graphic.service';
 import { environment } from 'src/environments/environment';
 
@@ -16,35 +16,18 @@ export class PlayComponent {
   @ViewChild('gameCanvas') gameCanvas!: HTMLCanvasElement;
   canvasContext!: CanvasContext;
 
-  controls!: Controls;
   game!: Game;
   statusBar!: StatusBar;
 
   env = environment;
-  inputBuffer: Record<string, string> = {};
-  lastCycle: number = performance.now();
-  requestFrame: boolean = true;
   Game = Game;
 
-  constructor(public gameInitService: GameInitService) {}
+  constructor(private _gameInit: GameInitService, private _gameLoop: GameLoopService) {}
 
   ngAfterViewInit(): void {
-    this.watchForInput();
     this.refreshCanvasContext();
-    this.controls = this.gameInitService.controls();
-    this.game = this.gameInitService.game();
-    this.statusBar = this.gameInitService.statusBar(this.game);
-  }
-
-  processInput(): void {
-    for (const input in this.inputBuffer) {
-      if (!this.game.character.dead && !this.game.character.isDying && this.game.waitTimer <= 0) {
-        if (input === this.game.controls.up) this.game.character.setMove('up');
-        else if (input === this.game.controls.down) this.game.character.setMove('down');
-        else if (input === this.game.controls.right) this.game.character.setMove('right');
-        else if (input === this.game.controls.left) this.game.character.setMove('left');
-      }
-    }
+    this.game = this._gameInit.game();
+    this.statusBar = this._gameInit.statusBar(this.game);
   }
 
   refreshCanvasContext(): void {
@@ -52,16 +35,5 @@ export class PlayComponent {
     if (!context) throw Error('Must have 2d context in the play component');
     this.canvasContext = { canvas: this.gameCanvas, context };
     GraphicService.clearCanvas(this.canvasContext);
-  }
-
-  watchForInput(): void {
-    window.addEventListener(
-      'keydown',
-      (event: { key: string }) => (this.inputBuffer[event.key] = event.key),
-    );
-    window.addEventListener(
-      'keyup',
-      (event: { key: string }) => delete this.inputBuffer[event.key],
-    );
   }
 }

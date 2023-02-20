@@ -20,7 +20,7 @@ export class StatusBarSpriteElement {
     this.sprite = params.sprite;
   }
 
-  render(context: CanvasContext): void {
-    this.sprite.render(this.position, this.size.width / 2, context.context);
+  render(canvas: CanvasContext): void {
+    this.sprite.render(this.position, this.size.width / 2, canvas);
   }
 }

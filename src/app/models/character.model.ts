@@ -1,7 +1,8 @@
+import { CanvasContext } from './canvas-context.model';
 import { Direction } from './directions.model';
-import { HitBox } from './hit-box.model';
 import { Move } from './move.model';
 import { Position } from './position.model';
+import { Circle } from './shapes.model';
 import { Sprite } from './sprite.model';
 
 export interface CharacterParams {
@@ -45,10 +46,12 @@ export class Character {
     return !!(this.dyingTimer && this.dyingTimer > 0);
   }
 
-  get hitCircle(): HitBox {
+  get hitCircle(): Circle {
     return {
-      x: this.position.x,
-      y: this.position.y,
+      center: {
+        x: this.position.x,
+        y: this.position.y,
+      },
       radius: this.radius * 0.75,
     };
   }
@@ -59,12 +62,12 @@ export class Character {
     else if (!this.dead) this._move(elapsedTime);
   }
 
-  render(context: CanvasRenderingContext2D): void {
+  render(canvas: CanvasContext): void {
     let toRender: Sprite | null = null;
     if (this.isDying) toRender = this.dyingSprite;
     else if (!this.dead) toRender = this.sprite;
 
-    toRender?.render(this.position, this.radius, context);
+    toRender?.render(this.position, this.radius, canvas);
   }
 
   startDying(timer?: number): void {

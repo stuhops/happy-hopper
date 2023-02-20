@@ -1,6 +1,6 @@
 import { BehaviorSubject } from 'rxjs';
 import { Character } from './character.model';
-import { Controls } from './controls.model';
+import { Clock } from './clock.model';
 
 export interface GameParams {
   // Required
@@ -8,19 +8,17 @@ export interface GameParams {
   character: Character;
 
   // Optional
-  gameClockAmount?: 100000 | number;
   waitTimer?: 1000 | number;
-
+  won?: boolean;
   score?: 100 | number;
   level?: number;
   lives?: 3 | number;
   gameOver?: false | boolean;
-  gameClock?: 100000 | number;
+  gameOverClock?: Clock;
+  clock?: Clock;
   checkCollisions?: true | boolean;
   // obstacles?: Obstacle[];
   // guts?: Guts[];
-
-  controls?: Controls;
 }
 
 export class Game {
@@ -30,33 +28,33 @@ export class Game {
   character: Character;
 
   levels: number;
-  gameClockInitAmount: 100000 | number;
   waitTimer: 1000 | number;
 
   score: BehaviorSubject<number>;
   level: number;
   lives: BehaviorSubject<number>;
-  gameOver: BehaviorSubject<boolean>;
-  gameClock: BehaviorSubject<number>;
+  won: boolean;
+  gameOver: boolean;
+  gameOverClock: Clock;
+  clock: Clock;
   checkCollisions: true | boolean;
+  board: any; // TODO
   // obstacles: Obstacle[];
   // guts: Guts[];
-
-  controls: Controls;
 
   constructor(params: GameParams) {
     this.levels = params.levels ?? 2;
     this.character = params.character;
-    this.gameClockInitAmount = params.gameClockAmount ?? 100000;
     this.waitTimer = params.waitTimer ?? 1000;
     this.score = new BehaviorSubject<number>(params.score ?? 100);
     this.level = params.level ?? 0;
     this.lives = new BehaviorSubject<number>(params.lives ?? 3);
-    this.gameOver = new BehaviorSubject<boolean>(!!params.gameOver);
-    this.gameClock = new BehaviorSubject<number>(params.gameClock ?? this.gameClockInitAmount);
+    this.won = !!params.won;
+    this.gameOver = !!params.gameOver;
+    this.gameOverClock = params.gameOverClock ?? new Clock({ initialTime: 3000 });
+    this.clock = params.clock ?? new Clock();
     this.checkCollisions = params.checkCollisions ?? true;
     // obstacles: Obstacle[];
     // guts: Guts[];
-    this.controls = params.controls ?? new Controls();
   }
 }

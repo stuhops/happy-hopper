@@ -1,3 +1,4 @@
+import { CanvasContext } from './canvas-context.model';
 import { Coords } from './coords.model';
 import { Position } from './position.model';
 import { SpriteSheet } from './sprite-sheet.model';
@@ -33,12 +34,12 @@ export class Sprite {
     this.curr = (this.curr + 1) % this.sprites;
   }
 
-  render(position: Position, characterRadius: number, context: CanvasRenderingContext2D): void {
-    context.save();
-    context.translate(position.x, position.y);
-    context.rotate(position.angle);
-    context.translate(-position.x, -position.y);
-    context.drawImage(
+  render(position: Position, characterRadius: number, canvas: CanvasContext): void {
+    canvas.context.save();
+    canvas.context.translate(position.x, position.y);
+    canvas.context.rotate(position.angle);
+    canvas.context.translate(-position.x, -position.y);
+    canvas.context.drawImage(
       // Image
       this.sheet.sheet,
       // Start clipping x and y
@@ -54,6 +55,6 @@ export class Sprite {
       this.drawSize.width,
       this.drawSize.height,
     );
-    context.restore();
+    canvas.context.restore();
   }
 }
