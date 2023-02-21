@@ -1,4 +1,5 @@
 import { Coords } from './coords.model';
+import { Move } from './move.model';
 
 export interface PositionParams extends Coords {
   angle?: number; // In radians
@@ -25,6 +26,17 @@ export class Position {
     this.max = params.max;
     this.startCenter = { x: this.x, y: this.y };
     this.nextCenter = this.startCenter;
+  }
+
+  update(elapsedTime: number, move: Move): void {
+    if (move.direction === 'up')
+      this.offset({ x: 0, y: -(move.ppms * elapsedTime) });
+    else if (move.direction === 'down')
+      this.offset({ x: 0, y: move.ppms * elapsedTime });
+    else if (move.direction === 'right')
+      this.offset({ x: move.ppms * elapsedTime, y: 0 });
+    else if (move.direction === 'left')
+      this.offset({ x: -(move.ppms * elapsedTime), y: 0 });
   }
 
   offset(dif: Coords): void {

@@ -6,11 +6,11 @@ export interface ClockParams {
 }
 
 export class Clock {
-  _timer: BehaviorSubject<number>;
   initialTime: number;
+  private _timer: BehaviorSubject<number>;
 
   constructor(params?: ClockParams) {
-    this.initialTime = params?.initialTime ?? 100000;
+    this.initialTime = params?.initialTime ?? params?.timer ?? 100000;
     this._timer = new BehaviorSubject<number>(params?.timer ?? this.initialTime);
   }
 

@@ -114,25 +114,15 @@ export class Character {
 
     this.position.x += this.move.drift.x * elapsedTime;
     if (this.move.direction) {
-      this.move.timer -= elapsedTime;
+      this.move.update(elapsedTime);
       this.sprite.curr =
         this.sprite.sprites -
-        Math.floor(this.move.timer / (this.move.baseTimer / this.sprite.sprites));
-      if (this.move.timer > 0) {
-        if (this.move.direction === 'up')
-          this.position.offset({ x: 0, y: -(this.move.ppms * elapsedTime) });
-        else if (this.move.direction === 'down')
-          this.position.offset({ x: 0, y: this.move.ppms * elapsedTime });
-        else if (this.move.direction === 'right')
-          this.position.offset({ x: this.move.ppms * elapsedTime, y: 0 });
-        else if (this.move.direction === 'left')
-          this.position.offset({ x: -(this.move.ppms * elapsedTime), y: 0 });
-      } else {
-        this.sprite.curr = 0;
-        this.move.timer = 0;
-        this.move.direction = null;
-        this.position.nextCenter.x = this.position.x;
-        this.position.y = this.position.nextCenter.y;
+        Math.floor(this.move.clock.timer / (this.move.clock.initialTime / this.sprite.sprites));
+      if (this.move.clock.timer > 0) this.position.update(elapsedTime, this.move);
+      else {
+        this.sprite.reset();
+        this.position.setNextMoveCenter(this.position, 0);
+        this.move.reset();
       }
     }
   }

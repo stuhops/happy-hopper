@@ -1,4 +1,5 @@
 import { CanvasContext } from './canvas-context.model';
+import { Clock } from './clock.model';
 import { Coords } from './coords.model';
 import { Position } from './position.model';
 import { SpriteSheet } from './sprite-sheet.model';
@@ -8,6 +9,7 @@ export interface SpriteParams {
   sheet: SpriteSheet;
   clipSize: WHSize;
   drawSize: WHSize;
+  clock?: Clock;
   sprites?: number;
   curr?: number;
   offset?: Coords;
@@ -24,6 +26,9 @@ export class Sprite {
   offset: Coords;
   offsetRow2?: { x: number; y: number; breakPoint: number };
   reverseUpdate: boolean;
+  clock?: Clock;
+
+  private _originalSprite: number;
 
   constructor(params: SpriteParams) {
     this.reverseUpdate = !!params.reverseUpdate;
@@ -34,6 +39,9 @@ export class Sprite {
     this.drawSize = params.drawSize;
     this.offset = params.offset ?? { x: 0, y: 0 };
     this.offsetRow2 = params.offsetRow2;
+    this.clock = params.clock;
+
+    this._originalSprite = this.curr;
   }
 
   next(): void {
@@ -44,7 +52,7 @@ export class Sprite {
 
   render(
     position: Position | Coords,
-    characterRadius: number,
+    characterRadius: number, // TODO: This shouldn't be a radius. Maybe it can be a center? Looks like a conflict maybe
     canvas: CanvasContext,
     sizeOverride?: WHSize,
   ): void {
@@ -69,12 +77,27 @@ export class Sprite {
       this.clipSize.width,
       this.clipSize.height,
       // Start x and y on canvas
-      position.x - characterRadius,
+      position.x - characterRadius, // We could make this be position.x + width/2 and height for y
       position.y - characterRadius,
       // Size x and y on canvas
       sizeOverride?.width ?? this.drawSize.width,
       sizeOverride?.height ?? this.drawSize.height,
     );
     canvas.context.restore();
+  }
+
+  reset(): void {
+    this.clock?.reset();
+    this.curr = this._originalSprite;
+  }
+
+  update(elapsedTime: number): void {
+    if (this.clock) {
+      this.clock?.update(elapsedTime);
+      if (this.clock.timer === 0) {
+        this.clock.reset();
+        this.next();
+      }
+    }
   }
 }
