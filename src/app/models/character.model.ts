@@ -1,3 +1,4 @@
+import { GameSpriteService } from '../services/game-sprite/game-sprite.service';
 import { CanvasContext } from './canvas-context.model';
 import { Direction } from './directions.model';
 import { Move } from './move.model';
@@ -79,7 +80,7 @@ export class Character {
   startDying(timer?: number): void {
     this.dyingTimer = timer ?? Character.DEATH_LENGTH;
     this.guts = new ParticleSystem({
-      image: null, // TODO
+      sprite: GameSpriteService.gameSprites.guts,
       center: this.position,
       size: { mean: 20, stdDev: 5 },
       speed: { mean: 0, stdDev: 0.2 },

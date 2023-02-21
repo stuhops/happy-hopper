@@ -1,10 +1,10 @@
-import { GraphicService } from '../services/graphic/graphic.service';
 import { CanvasContext } from './canvas-context.model';
 import { Coords } from './coords.model';
+import { Sprite } from './sprite.model';
 import { WHSize } from './wh-size.model';
 
 export interface ParticleParams {
-  image: any; // TODO
+  sprite: Sprite;
   center: Coords;
   size: WHSize;
   speed: number;
@@ -17,7 +17,7 @@ export interface ParticleParams {
 }
 
 export class Particle {
-  image: any; // TODO
+  sprite: Sprite;
   center: Coords;
   size: WHSize;
   speed: number;
@@ -29,7 +29,7 @@ export class Particle {
   stroke: string = 'rgb(0, 0, 0)';
 
   constructor(params: ParticleParams) {
-    this.image = params.image;
+    this.sprite = params.sprite;
     this.center = params.center;
     this.size = params.size;
     this.speed = params.speed;
@@ -42,7 +42,7 @@ export class Particle {
   }
 
   render(canvas: CanvasContext): void {
-    GraphicService.drawTexture(canvas, this.image, this.center, this.rotation, this.size);
+    this.sprite.render(this.center, this.size.width, canvas, this.size);
   }
 
   update(elapsedTime: number): void {

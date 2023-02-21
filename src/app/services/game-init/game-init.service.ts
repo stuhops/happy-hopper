@@ -13,7 +13,7 @@ export class GameInitService {
   constructor(private _characterService: CharacterService) {}
 
   frog(): Character {
-    return this._characterService.defaultFrog();
+    return this._characterService.frog();
   }
 
   game(): Game {
@@ -30,77 +30,17 @@ export class GameInitService {
 
   statusBar(game: Game): StatusBar {
     return new StatusBar({
-      size: { width: Game.SQR_SIZE, height: Game.SQR_SIZE / Game.ROWS },
+      size: { width: Game.SQR_SIZE, height: Game.ROW_HEIGHT },
       gameLives: game.lives,
       score: game._score,
       gameClock: game.clock,
       position: { x: 0, y: 0 },
     });
   }
-
-  // function newGame() {
-  //   game.winRow = game.createWinRow(
-  //     0,  // x
-  //     0,  // y
-  //     game.gameWidth,  // width
-  //     game.gameHeight / game.rows * 2 // height
-  //     // fillImgSrc
-  //     // obstacleImgSrcArr
-  //   );
-  //   game.river = game.createRiver(
-  //     0,  // x
-  //     2 * (game.gameHeight / game.rows),  // y
-  //     game.gameWidth,  // width
-  //     game.gameHeight / game.rows * 5 // height
-  //   );
-  //   game.middleLand = game.createLand(
-  //     0,  // x
-  //     parseInt(game.rows / 2) * (game.gameHeight / game.rows),  // y
-  //     game.gameWidth,  // width
-  //     game.gameHeight / game.rows * 1 // height
-  //   );
-  //   game.road = game.createRoad(
-  //     0,  // x
-  //     parseInt(game.rows / 2 + 1) * (game.gameHeight / game.rows),  // y
-  //     game.gameWidth,  // width
-  //     game.gameHeight / game.rows * 5 // height
-  //   );
-  //   game.startLand = game.createLand(
-  //     0,  // x
-  //     parseInt(game.rows - 1) * (game.gameHeight / game.rows),  // y
-  //     game.gameWidth,  // width
-  //     game.gameHeight / game.rows * 1 // height
-  //   );
-
-  //   game.statusBar = game.createStatusBar(
-  //     game.gameWidth,
-  //     game.gameHeight / game.rows,
-  //     0,
-  //     0,
-  //     // parseInt(game.rows - 1) * (game.gameHeight / game.rows),  // y
-  //   )
-
-  //   document.getElementById('background-music').play();
-
-  //   if(game.level === 1)
-  //     game.score = 0;
-
-  //   game.timer = 30000;
-  //   game.baseTimer = 30000;
-  //   game.lives = 3;
-  //   game.won = true;
-  //   game.gameOver = false;
-  //   game.gameLoop.start();
-  // }
 }
 
 // game.loader = (function() {
 //     let scriptOrder = [
-//         {
-//             scripts: ['gameLoop', 'images'],
-//             message: 'Foundation loaded',
-//             onComplete: null
-//         }, {
 //             scripts: ['obstacle', 'road', 'river', 'land', 'winRow', 'character', 'initialize'],
 //             message: 'Game Board loaded',
 //             onComplete: null
@@ -253,3 +193,49 @@ export class GameInitService {
 //     );
 
 // }());
+// function newGame() {
+//   game.winRow = game.createWinRow(
+//     0,  // x
+//     0,  // y
+//     game.gameWidth,  // width
+//     game.gameHeight / game.rows * 2 // height
+//     // fillImgSrc
+//     // obstacleImgSrcArr
+//   );
+//   game.river = game.createRiver(
+//     0,  // x
+//     2 * (game.gameHeight / game.rows),  // y
+//     game.gameWidth,  // width
+//     game.gameHeight / game.rows * 5 // height
+//   );
+//   game.middleLand = game.createLand(
+//     0,  // x
+//     parseInt(game.rows / 2) * (game.gameHeight / game.rows),  // y
+//     game.gameWidth,  // width
+//     game.gameHeight / game.rows * 1 // height
+//   );
+//   game.road = game.createRoad(
+//     0,  // x
+//     parseInt(game.rows / 2 + 1) * (game.gameHeight / game.rows),  // y
+//     game.gameWidth,  // width
+//     game.gameHeight / game.rows * 5 // height
+//   );
+//   game.startLand = game.createLand(
+//     0,  // x
+//     parseInt(game.rows - 1) * (game.gameHeight / game.rows),  // y
+//     game.gameWidth,  // width
+//     game.gameHeight / game.rows * 1 // height
+//   );
+
+//   game.statusBar = game.createStatusBar(
+//     game.gameWidth,
+//     game.gameHeight / game.rows,
+//     0,
+//     0,
+//     // parseInt(game.rows - 1) * (game.gameHeight / game.rows),  // y
+//   )
+
+//   document.getElementById('background-music').play();
+
+//   game.gameLoop.start();
+// }

@@ -2,10 +2,11 @@ import { RandomService } from '../services/random/random.service';
 import { CanvasContext } from './canvas-context.model';
 import { Coords } from './coords.model';
 import { Particle } from './particle.model';
+import { Sprite } from './sprite.model';
 import { BasicStats } from './stats.model';
 
 export interface ParticleSystemParams {
-  image: any; // TODO
+  sprite: Sprite;
   center: Coords;
   size: BasicStats;
   speed: BasicStats;
@@ -15,7 +16,7 @@ export interface ParticleSystemParams {
 }
 
 export class ParticleSystem {
-  image: any; // TODO
+  sprite: Sprite;
   center: Coords;
   size: BasicStats;
   speed: BasicStats;
@@ -24,7 +25,7 @@ export class ParticleSystem {
   creationCycles: number = 5;
 
   constructor(params: ParticleSystemParams) {
-    this.image = params.image;
+    this.sprite = params.sprite;
     this.center = params.center;
     this.size = params.size;
     this.speed = params.speed;
@@ -51,7 +52,7 @@ export class ParticleSystem {
       for (let count = 0; count < 15; count++) {
         const size: number = Math.abs(RandomService.nextGaussian(this.size));
         const next: Particle = new Particle({
-          image: this.image,
+          sprite: this.sprite,
           center: this.center,
           size: { width: size, height: size },
           rotation: 0,
