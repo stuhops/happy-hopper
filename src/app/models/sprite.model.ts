@@ -44,6 +44,20 @@ export class Sprite {
     this._originalSprite = this.curr;
   }
 
+  deepCopy(): Sprite {
+    return new Sprite({
+      sheet: this.sheet.deepCopy(),
+      clipSize: { ...this.clipSize },
+      drawSize: { ...this.drawSize },
+      clock: this.clock?.deepCopy(),
+      sprites: this.sprites,
+      curr: this.curr,
+      offset: { ...this.offset },
+      offsetRow2: this.offsetRow2 ? { ...this.offsetRow2 } : undefined,
+      reverseUpdate: this.reverseUpdate,
+    });
+  }
+
   next(): void {
     const next = this.curr + 1 * (this.reverseUpdate ? -1 : 1);
     if (next < 0) this.curr = next + this.sprites;
@@ -52,9 +66,11 @@ export class Sprite {
 
   render(
     position: Position | Coords,
-    characterRadius: number, // TODO: This shouldn't be a radius. Maybe it can be a center? Looks like a conflict maybe
     canvas: CanvasContext,
-    sizeOverride?: WHSize,
+    options?: {
+      asCenter?: boolean;
+      sizeOverride?: WHSize;
+    },
   ): void {
     let _offset: Coords = this.offset;
     let offsetMultiplier: number = this.curr;
@@ -62,6 +78,10 @@ export class Sprite {
       _offset = this.offsetRow2;
       offsetMultiplier = this.curr - this.offsetRow2.breakPoint;
     }
+    const size: WHSize = {
+      width: options?.sizeOverride?.width ?? this.drawSize.width,
+      height: options?.sizeOverride?.height ?? this.drawSize.height,
+    };
 
     canvas.context.save();
     canvas.context.translate(position.x, position.y);
@@ -77,11 +97,11 @@ export class Sprite {
       this.clipSize.width,
       this.clipSize.height,
       // Start x and y on canvas
-      position.x - characterRadius, // We could make this be position.x + width/2 and height for y
-      position.y - characterRadius,
+      options?.asCenter ? position.x - size.width / 2 : position.x,
+      options?.asCenter ? position.y - size.height / 2 : position.y,
       // Size x and y on canvas
-      sizeOverride?.width ?? this.drawSize.width,
-      sizeOverride?.height ?? this.drawSize.height,
+      size.width,
+      size.height,
     );
     canvas.context.restore();
   }

@@ -42,7 +42,7 @@ export class Particle {
   }
 
   render(canvas: CanvasContext): void {
-    this.sprite.render(this.center, this.size.width, canvas, this.size);
+    this.sprite.render(this.center, canvas, { asCenter: true, sizeOverride: this.size });
   }
 
   update(elapsedTime: number): void {

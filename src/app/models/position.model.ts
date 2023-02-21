@@ -28,15 +28,23 @@ export class Position {
     this.nextCenter = this.startCenter;
   }
 
+  deepCopy(): Position {
+    return new Position({
+      x: this.x,
+      y: this.y,
+      angle: this.angle,
+      min: this.min ? { ...this.min } : undefined,
+      max: this.max ? { ...this.max } : undefined,
+      nextCenter: this.nextCenter ? { ...this.nextCenter } : undefined,
+      startCenter: this.startCenter ? { ...this.startCenter } : undefined,
+    });
+  }
+
   update(elapsedTime: number, move: Move): void {
-    if (move.direction === 'up')
-      this.offset({ x: 0, y: -(move.ppms * elapsedTime) });
-    else if (move.direction === 'down')
-      this.offset({ x: 0, y: move.ppms * elapsedTime });
-    else if (move.direction === 'right')
-      this.offset({ x: move.ppms * elapsedTime, y: 0 });
-    else if (move.direction === 'left')
-      this.offset({ x: -(move.ppms * elapsedTime), y: 0 });
+    if (move.direction === 'up') this.offset({ x: 0, y: -(move.ppms * elapsedTime) });
+    else if (move.direction === 'down') this.offset({ x: 0, y: move.ppms * elapsedTime });
+    else if (move.direction === 'right') this.offset({ x: move.ppms * elapsedTime, y: 0 });
+    else if (move.direction === 'left') this.offset({ x: -(move.ppms * elapsedTime), y: 0 });
   }
 
   offset(dif: Coords): void {

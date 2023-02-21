@@ -1,15 +1,20 @@
+import { CollisionService } from '../services/collision/collision.service';
 import { CanvasContext } from './canvas-context.model';
 import { Clock } from './clock.model';
+import { Collision, CollisionType } from './collision.model';
 import { Game } from './game.model';
 import { HitBox } from './hit-box.model';
 import { Move } from './move.model';
 import { Position } from './position.model';
+import { Circle } from './shapes.model';
 import { Sprite } from './sprite.model';
 import { WHSize } from './wh-size.model';
 
 export interface SpriteDanger {
   sprite: Sprite;
   safe: boolean;
+  points?: number;
+  win?: boolean;
   clock?: Clock;
 }
 
@@ -36,8 +41,16 @@ export class Obstacle {
     this.size = params.size ?? { width: Game.ROW_HEIGHT, height: Game.ROW_HEIGHT };
   }
 
+  get points(): number {
+    return this.spriteDangerArr[this.spriteIdx].points ?? 0;
+  }
+
   get safe(): boolean {
     return !!this.spriteDangerArr[this.spriteIdx].safe;
+  }
+
+  get win(): boolean {
+    return !!this.spriteDangerArr[this.spriteIdx].win;
   }
 
   get hitBox(): HitBox {
@@ -49,8 +62,41 @@ export class Obstacle {
     };
   }
 
+  getCollision(hitCircle: Circle): Collision | null {
+    const isColliding: boolean = CollisionService.rectCircleIntersect(
+      this.position,
+      this.size,
+      hitCircle,
+    );
+    if (!isColliding) return { drift: this.move.drift };
+    else
+      return {
+        drift: this.move.drift,
+        type: this.win ? CollisionType.win : this.safe ? undefined : CollisionType.die,
+        points: this.points,
+        // TODO: Column if needed
+      };
+  }
+
+  deepCopy(overrides?: Partial<ObstacleParams>): Obstacle {
+    return new Obstacle({
+      position: overrides?.position ?? this.position.deepCopy(),
+      move: overrides?.move ?? this.move.deepCopy(),
+      spriteDangerArr:
+        overrides?.spriteDangerArr ??
+        this.spriteDangerArr.map((sd) => {
+          return {
+            sprite: sd.sprite.deepCopy(),
+            safe: sd.safe,
+            clock: sd.clock ? sd.clock.deepCopy() : undefined,
+          };
+        }),
+      spriteIdx: overrides?.spriteIdx ?? this.spriteIdx,
+    });
+  }
+
   render(canvas: CanvasContext): void {
-    this.spriteDangerArr[this.spriteIdx].sprite.render(this.position, this.size.width / 2, canvas);
+    this.spriteDangerArr[this.spriteIdx].sprite.render(this.position, canvas);
   }
 
   update(elapsedTime: number): void {

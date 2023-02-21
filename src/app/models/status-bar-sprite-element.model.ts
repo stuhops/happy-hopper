@@ -21,6 +21,6 @@ export class StatusBarSpriteElement {
   }
 
   render(canvas: CanvasContext): void {
-    this.sprite.render(this.position, this.size.width / 2, canvas);
+    this.sprite.render(this.position, canvas, { sizeOverride: this.size });
   }
 }

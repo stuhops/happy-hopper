@@ -14,6 +14,13 @@ export class Clock {
     this._timer = new BehaviorSubject<number>(params?.timer ?? this.initialTime);
   }
 
+  deepCopy(): Clock {
+    return new Clock({
+      timer: this.timer,
+      initialTime: this.initialTime,
+    });
+  }
+
   reset(): void {
     this.timer = this.initialTime;
   }

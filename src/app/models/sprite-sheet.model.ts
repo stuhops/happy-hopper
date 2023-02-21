@@ -13,4 +13,11 @@ export class SpriteSheet {
     this.sheet = params.sheet;
     this.size = params.size;
   }
+
+  deepCopy(): SpriteSheet {
+    return new SpriteSheet({
+      sheet: this.sheet,
+      size: { ...this.size },
+    });
+  }
 }

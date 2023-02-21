@@ -23,7 +23,7 @@ export class Character {
   static DEATH_LENGTH = 2000;
 
   radius: number;
-  position: Position;
+  position: Position; // Use center
   move: Move;
   sprite: Sprite;
   dyingSprite: Sprite;
@@ -65,9 +65,9 @@ export class Character {
   /////////////////  Public //////////////////////
   render(canvas: CanvasContext): void {
     if (this.isDying) {
-      this.dyingSprite.render(this.position, this.radius, canvas);
+      this.dyingSprite.render(this.position, canvas, { asCenter: true });
       this.guts?.render(canvas);
-    } else if (!this.dead) this.sprite.render(this.position, this.radius, canvas);
+    } else if (!this.dead) this.sprite.render(this.position, canvas, { asCenter: true });
   }
 
   reset(): void {
