@@ -12,7 +12,13 @@ import { GameSpriteService } from '../game-sprite/game-sprite.service';
 export class GameBoardService {
   generateBoard(): GameBoard {
     return new GameBoard({
-      rows: [this.generateLandRow(new Position({ x: 0, y: Game.ROW_HEIGHT * 14 }))],
+      rows: [
+        ...this.generateWinRow(), // 1-2
+        ...this.generateRiverRows(), // 3-7
+        this.generateLandRow(new Position({ x: 0, y: Game.ROW_HEIGHT * (Game.ROWS - 7) })), // 8
+        ...this.generateRoadRows(), // 9-13
+        this.generateLandRow(new Position({ x: 0, y: Game.ROW_HEIGHT * (Game.ROWS - 1) })), // 14
+      ],
     });
   }
 
