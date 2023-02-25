@@ -22,8 +22,10 @@ export class GameBoardService {
   generateBoard(level: number): GameBoard {
     return new GameBoard({
       rows: [
-        ...this.generateWinRow(new Position({ x: 0, y: Game.ROW_HEIGHT * 0 })), // 1-2
         ...this.generateRiverRows(new Position({ x: 0, y: Game.ROW_HEIGHT * 2 }), level), // 3-7
+        // Render win row after the river so that the lilly pads show well
+        // (Contains one extra to overlap textures well)
+        ...this.generateWinRow(new Position({ x: 0, y: Game.ROW_HEIGHT * 0 })), // 0-2
         this.generateLandRow(new Position({ x: 0, y: Game.ROW_HEIGHT * 7 })), // 8
         ...this.generateRoadRows(new Position({ x: 0, y: Game.ROW_HEIGHT * 8 }), level), // 9-13
         this.generateLandRow(new Position({ x: 0, y: Game.ROW_HEIGHT * 13 })), // 14
