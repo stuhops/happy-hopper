@@ -30,18 +30,18 @@ export class TimerDisplay {
   render(canvas: CanvasContext): void {
     GraphicService.drawBox(canvas, {
       position: { ...this.position },
-      size: this.size,
       lineWidth: 6,
       fillStyle: '#3bffff',
-    });
-    GraphicService.drawBox(canvas, {
-      position: { ...this.position },
       size: {
         width: this.size.width * (this.clock.timer / this.clock.initialTime),
         height: this.size.height,
       },
+    });
+    GraphicService.drawBox(canvas, {
+      position: { ...this.position },
       strokeStyle: 'black',
       lineWidth: 6,
+      size: this.size,
     });
   }
 

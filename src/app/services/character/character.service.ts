@@ -20,7 +20,7 @@ export class CharacterService {
       position: new Position({
         x: Game.SQR_SIZE / 2,
         y: (Game.ROWS - 0.5) * Game.ROW_HEIGHT,
-        angle: 0,
+        angle: Math.PI,
         max: { x: Game.SQR_SIZE, y: Game.SQR_SIZE },
       }),
       move: new Move({ distance: Game.ROW_HEIGHT }),
