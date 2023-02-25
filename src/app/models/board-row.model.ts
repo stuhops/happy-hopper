@@ -23,6 +23,7 @@ export interface BoardRowParams {
   defaultSafe?: boolean; // Default false
   obstacles?: ObstacleTimer[];
   obstaclesIdx?: number;
+  currObstacles?: Obstacle[];
   min?: Coords;
   max?: Coords;
 }
@@ -45,6 +46,7 @@ export class BoardRow {
     this.background = params.background;
     this.size = params.size ?? { width: Game.SQR_SIZE, height: Game.ROW_HEIGHT };
     this.defaultSafe = !!params.defaultSafe;
+    this.obstacles = params.currObstacles ?? [];
     this.nextObstacles = params.obstacles ?? [];
     this.nextObstaclesIdx = params.obstaclesIdx ?? this.nextObstacles.length ? 0 : null;
     this.min = params.min ?? { x: -Game.SQR_SIZE, y: this.position.y };
@@ -58,6 +60,28 @@ export class BoardRow {
         y: this.position.y,
       });
     else return this.position.deepCopy();
+  }
+
+  deepCopy(options?: { offset: Coords }): BoardRow {
+    const position = this.position.deepCopy();
+    if (options?.offset) position.offset(options.offset);
+
+    return new BoardRow({
+      position: position,
+      move: this.move.deepCopy(),
+      background: this.background, // TODO: Does this need to be deep copied?
+      size: { ...this.size },
+      defaultSafe: this.defaultSafe,
+      obstacles: this.nextObstacles.map((ot: ObstacleTimer) => {
+        return {
+          wait: ot.wait,
+          obstacles: ot.obstacles.map((o: Obstacle) => o.deepCopy()),
+        };
+      }),
+      currObstacles: this.obstacles?.map((o: Obstacle) => o.deepCopy()),
+      min: { ...this.min },
+      max: { ...this.max },
+    });
   }
 
   getCollision(hitCircle: Circle): Collision | null {

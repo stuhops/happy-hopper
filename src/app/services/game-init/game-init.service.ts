@@ -16,11 +16,12 @@ export class GameInitService {
   ) {}
 
   game(): Game {
+    const level = 0;
     return new Game({
-      level: 0,
+      level: level,
       levels: 2,
       character: this._characterService.frog(),
-      board: this._gameBoardService.generateBoard(),
+      board: this._gameBoardService.generateBoard(level),
     });
   }
 
