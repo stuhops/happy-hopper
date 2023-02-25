@@ -5,14 +5,19 @@ import { Game } from 'src/app/models/game.model';
 import { HighScore } from 'src/app/models/high-score.model';
 import { StatusBar } from 'src/app/models/status-bar.model';
 import { CharacterService } from '../character/character.service';
+import { GameBoard } from 'src/app/models/game-board.model';
+import { GameBoardService } from '../game-board/game-board.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GameInitService {
-  constructor(private _characterService: CharacterService) {}
+  constructor(
+    private _characterService: CharacterService,
+    private _gameBoardService: GameBoardService,
+  ) {}
 
-  frog(): Character {
+  genFrog(): Character {
     return this._characterService.frog();
   }
 
@@ -20,8 +25,13 @@ export class GameInitService {
     return new Game({
       level: 0,
       levels: 2,
-      character: this.frog(),
+      character: this.genFrog(),
+      board: this.genGameBoard(),
     });
+  }
+
+  genGameBoard(): GameBoard {
+    return this._gameBoardService.generateBoard();
   }
 
   highScores(): HighScore[] {

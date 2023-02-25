@@ -75,7 +75,7 @@ export class StatusBar {
 
       const sprite: Sprite = new Sprite({
         sheet: new SpriteSheet({
-          sheet: `${environment.assetPrefix}game_sprites.png`,
+          src: `${environment.assetPrefix}game_sprites.png`,
           size: { width: 600, height: 561 },
         }),
         clipSize: { width: 54, height: 70 },

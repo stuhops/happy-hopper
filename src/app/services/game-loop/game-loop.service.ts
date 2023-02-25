@@ -20,10 +20,11 @@ export class GameLoopService {
 
   constructor(private _inputService: InputService) {}
 
-  init(game: Game, statusBar: StatusBar, canvas: CanvasContext): void {
+  init(game: Game, statusBar: StatusBar, canvas: CanvasContext, start: boolean = true): void {
     this.game = game;
     this.statusBar = statusBar;
     this.canvas = canvas;
+    if (start) this.startGameLoop();
   }
 
   render(): void {
@@ -126,10 +127,10 @@ export class GameLoopService {
   }
 
   private _success(column: number): void {
-    this.game.board.winRow.setIdxDone(column);
+    this.game.board.setIdxDone(column);
     this.game.waitTimer.reset();
     this._newLife();
-    if (this.game.board.winRow.allIdxDone()) {
+    if (this.game.board.allIdxDone()) {
       this.game.score += 1000;
       this.game.won = true;
       this.game.gameOver = true;

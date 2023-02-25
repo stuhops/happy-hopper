@@ -1,22 +1,23 @@
 import { WHSize } from './wh-size.model';
 
 export interface SpriteSheetParams {
-  sheet: any;
+  src: string;
   size: WHSize;
 }
 
 export class SpriteSheet {
-  sheet: any; // TODO: Type this image
+  sheet: HTMLImageElement;
   size: WHSize;
 
   constructor(params: SpriteSheetParams) {
-    this.sheet = params.sheet;
+    this.sheet = new Image();
+    this.sheet.src = params.src;
     this.size = params.size;
   }
 
   deepCopy(): SpriteSheet {
     return new SpriteSheet({
-      sheet: this.sheet,
+      src: this.sheet.src,
       size: { ...this.size },
     });
   }

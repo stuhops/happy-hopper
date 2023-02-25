@@ -1,11 +1,13 @@
 import { BehaviorSubject } from 'rxjs';
 import { Character } from './character.model';
 import { Clock } from './clock.model';
+import { GameBoard } from './game-board.model';
 
 export interface GameParams {
   // Required
   levels: number;
   character: Character;
+  board: GameBoard;
 
   // Optional
   waitTimer?: 1000 | number;
@@ -36,12 +38,13 @@ export class Game {
   gameOver: boolean;
   gameOverClock: Clock;
   clock: Clock;
-  board: any; // TODO
+  board: GameBoard;
   // obstacles: Obstacle[];
 
   constructor(params: GameParams) {
     this.levels = params.levels ?? 2;
     this.character = params.character;
+    this.board = params.board;
     this.waitTimer = new Clock({ timer: 0, initialTime: params.waitTimer ?? 1000 });
     this._score = new BehaviorSubject<number>(params.score ?? 100);
     this.level = params.level ?? 0;

@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 })
 export class SpriteSheetService {
   static ALLIGATOR = new SpriteSheet({
-    sheet: `${environment}alligator.png`,
+    src: `${environment.assetPrefix}alligator.png`,
     size: {
       width: 381,
       height: 79,
@@ -15,7 +15,7 @@ export class SpriteSheetService {
   });
 
   static FIRE = new SpriteSheet({
-    sheet: `${environment}fire.png`,
+    src: `${environment.assetPrefix}fire.png`,
     size: {
       width: 256,
       height: 256,
@@ -23,7 +23,7 @@ export class SpriteSheetService {
   });
 
   static MAIN = new SpriteSheet({
-    sheet: `${environment}game_sprites.png`,
+    src: `${environment.assetPrefix}game_sprites.png`,
     size: {
       width: 600,
       height: 561,
@@ -31,7 +31,7 @@ export class SpriteSheetService {
   });
 
   static GUTS = new SpriteSheet({
-    sheet: `${environment}guts.png`,
+    src: `${environment.assetPrefix}guts.png`,
     size: {
       width: 256,
       height: 256,
