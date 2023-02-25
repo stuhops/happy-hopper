@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CanvasContext } from 'src/app/models/canvas-context.model';
 import { Game } from 'src/app/models/game.model';
 import { StatusBar } from 'src/app/models/status-bar.model';
@@ -13,7 +13,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./play.component.scss'],
 })
 export class PlayComponent {
-  @ViewChild('gameCanvas') gameCanvas!: HTMLCanvasElement;
+  @ViewChild('gameCanvas') gameCanvas!: ElementRef;
   canvasContext!: CanvasContext;
 
   game!: Game;
@@ -28,12 +28,13 @@ export class PlayComponent {
     this.refreshCanvasContext();
     this.game = this._gameInit.game();
     this.statusBar = this._gameInit.statusBar(this.game);
+    this._gameLoop.init(this.game, this.statusBar, this.canvasContext);
   }
 
   refreshCanvasContext(): void {
-    const context = this.gameCanvas.getContext('2d');
+    const context = this.gameCanvas.nativeElement.getContext('2d');
     if (!context) throw Error('Must have 2d context in the play component');
-    this.canvasContext = { canvas: this.gameCanvas, context };
+    this.canvasContext = { canvas: this.gameCanvas.nativeElement, context };
     GraphicService.clearCanvas(this.canvasContext);
   }
 }
