@@ -5,26 +5,36 @@ import { Circle } from './shapes.model';
 
 export interface GameBoardParams {
   rows: BoardRow[];
+  wonArr?: boolean[];
 }
 
 export class GameBoard {
   rows: BoardRow[];
+  wonArr: boolean[];
+
   constructor(params: GameBoardParams) {
     this.rows = params.rows;
+    this.wonArr = params.wonArr ?? [false, false, false, false, false];
   }
 
   allIdxDone(): boolean {
-    console.warn('TODO: All idx done is not implemented');
-    return false;
+    return this.wonArr.reduce((prev: boolean, curr: boolean) => prev && curr);
   }
 
   getCollision(hitCircle: Circle): Collision {
-    console.warn('TODO: Get collision is not implemented');
+    for (const row of this.rows) {
+      if (hitCircle.center <= row.max && hitCircle.center >= row.min) {
+        const collision = row.getCollision(hitCircle);
+        if (collision) return collision;
+      }
+    }
+    console.warn('Fell through collision detection');
     return { drift: { x: 0, y: 0 } };
   }
 
   setIdxDone(column: number): void {
-    console.error('TODO: Set idx done is not implemented');
+    if (column < 0 || column >= this.wonArr.length) throw Error;
+    this.wonArr[column] = true;
   }
 
   render(canvas: CanvasContext): void {
