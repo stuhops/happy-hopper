@@ -96,6 +96,8 @@ export class StatusBar {
   }
 
   private _initTimerDisplay(gameClock: Clock): void {
+    const audio: HTMLAudioElement = new Audio();
+    audio.src = `${environment.assetPrefix}time.mp3`;
     this.timerDisplay = new TimerDisplay({
       size: { width: this.size.width * 0.3 * 0.85, height: this.size.height / 2 }, // TODO: give a better explanation for these calcs
       position: new Position({
@@ -103,7 +105,7 @@ export class StatusBar {
         y: this.position.y + this.size.height / 4,
       }),
       clock: gameClock,
-      // audio: null, // TODO
+      audio: audio,
     });
   }
 

@@ -28,7 +28,8 @@ export class GameBoard {
         if (collision) return collision;
       }
     }
-    console.warn('Fell through collision detection');
+    // TODO: Add this in once we have the board setup
+    // console.warn('Fell through collision detection');
     return { drift: { x: 0, y: 0 } };
   }
 

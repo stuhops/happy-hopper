@@ -8,7 +8,7 @@ export interface TimerDisplayParams {
   size: WHSize;
   position: Position;
   clock: Clock;
-  // audio: any; // TODO
+  audio: HTMLAudioElement;
   initialTimer?: number;
 }
 
@@ -16,14 +16,14 @@ export class TimerDisplay {
   size: WHSize;
   position: Position;
   clock: Clock;
-  // audio: any; // TODO
+  audio: HTMLAudioElement;
   private _audioPlaying: boolean = false;
 
   constructor(params: TimerDisplayParams) {
     this.size = params.size;
     this.position = params.position;
     this.clock = params.clock;
-    // this.audio = params.audio; // TODO
+    this.audio = params.audio;
     this.update(0); // To know whether to play the audio
   }
 
@@ -48,10 +48,12 @@ export class TimerDisplay {
   reset(): void {
     this.clock.reset();
     this._audioPlaying = false;
-    // this.audio.stop; // TODO
+    this.audio.pause;
+    this.audio.currentTime = 0;
   }
 
   update(elapsedTime: number): void {
-    // if (this.timer / this.initialTimer < .3 && !this._audioPlaying) this.audio.play; // TODO
+    this.clock.update(elapsedTime);
+    if (this.clock.timer / this.clock.initialTime < 0.3 && !this._audioPlaying) this.audio.play; // TODO: Not playing
   }
 }

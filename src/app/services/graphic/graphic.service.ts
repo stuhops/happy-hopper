@@ -66,7 +66,7 @@ export class GraphicService {
 
   static drawTexture(
     canvas: CanvasContext,
-    image: any, // TODO
+    image: HTMLImageElement, // TODO
     center: Coords,
     rotation: number,
     size: WHSize,
