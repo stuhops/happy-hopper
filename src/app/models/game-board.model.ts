@@ -18,7 +18,7 @@ export class GameBoard {
   }
 
   allIdxDone(): boolean {
-    return this.wonArr.reduce((prev: boolean, curr: boolean) => prev && curr);
+    return this.wonArr.reduce((prev: boolean, curr: boolean) => prev && curr, true);
   }
 
   getCollision(hitCircle: Circle): Collision {

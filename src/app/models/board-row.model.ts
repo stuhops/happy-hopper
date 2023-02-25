@@ -66,23 +66,29 @@ export class BoardRow {
       const collision: Collision | null = obstacle.getCollision(hitCircle);
       if (collision) collisions.push(collision);
     }
-    const next: Collision = collisions.reduce((prev: Collision, curr: Collision) => {
-      let nextCollisionType: CollisionType | undefined;
-      if (prev.type === CollisionType.die || curr.type === CollisionType.die)
-        nextCollisionType = CollisionType.die;
-      else if (prev.type === CollisionType.win || curr.type === CollisionType.win)
-        nextCollisionType = CollisionType.win;
+    const next: Collision = collisions.reduce(
+      (prev: Collision, curr: Collision) => {
+        let nextCollisionType: CollisionType | undefined;
+        if (prev.type === CollisionType.die || curr.type === CollisionType.die)
+          nextCollisionType = CollisionType.die;
+        else if (prev.type === CollisionType.win || curr.type === CollisionType.win)
+          nextCollisionType = CollisionType.win;
 
-      const nextColumn = Math.max(prev.column ?? -1, curr.column ?? -1); // -1 is undefined
+        const nextColumn = Math.max(prev.column ?? -1, curr.column ?? -1); // -1 is undefined
 
-      const next: Collision = {
-        drift: { x: Math.max(prev.drift.x, curr.drift.x), y: Math.max(prev.drift.y, curr.drift.y) },
-        type: nextCollisionType,
-        points: (prev.points ?? 0) + (curr.points ?? 0),
-        column: nextColumn !== -1 ? nextColumn : undefined,
-      };
-      return next;
-    });
+        const next: Collision = {
+          drift: {
+            x: Math.max(prev.drift.x, curr.drift.x),
+            y: Math.max(prev.drift.y, curr.drift.y),
+          },
+          type: nextCollisionType,
+          points: (prev.points ?? 0) + (curr.points ?? 0),
+          column: nextColumn !== -1 ? nextColumn : undefined,
+        };
+        return next;
+      },
+      { drift: { x: 0, y: 0 } },
+    );
     return next;
   }
 

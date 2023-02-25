@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { RecordsService } from '../records/records.service';
-import { Character } from 'src/app/models/character.model';
 import { Game } from 'src/app/models/game.model';
 import { HighScore } from 'src/app/models/high-score.model';
 import { StatusBar } from 'src/app/models/status-bar.model';
 import { CharacterService } from '../character/character.service';
-import { GameBoard } from 'src/app/models/game-board.model';
 import { GameBoardService } from '../game-board/game-board.service';
 
 @Injectable({
@@ -17,21 +15,13 @@ export class GameInitService {
     private _gameBoardService: GameBoardService,
   ) {}
 
-  genFrog(): Character {
-    return this._characterService.frog();
-  }
-
   game(): Game {
     return new Game({
       level: 0,
       levels: 2,
-      character: this.genFrog(),
-      board: this.genGameBoard(),
+      character: this._characterService.frog(),
+      board: this._gameBoardService.generateBoard(),
     });
-  }
-
-  genGameBoard(): GameBoard {
-    return this._gameBoardService.generateBoard();
   }
 
   highScores(): HighScore[] {
@@ -51,7 +41,7 @@ export class GameInitService {
 
 // game.loader = (function() {
 //     let scriptOrder = [
-//             scripts: ['road', 'river', 'land', 'winRow', 'character', 'initialize'],
+//             scripts: ['road', 'river', 'land', 'winRow'],
 //             message: 'Game Board loaded',
 //             onComplete: null
 //         }];

@@ -48,7 +48,7 @@ export class GameLoopService {
 
   update(elapsedTime: number) {
     if (this.game.waitTimer.timer > 0) this.game.waitTimer.update(elapsedTime);
-    this.game.board.update(elapsedTime);
+    // this.game.board.update(elapsedTime);
     this.game.character.update(elapsedTime);
 
     if (!this.game.gameOver) {
