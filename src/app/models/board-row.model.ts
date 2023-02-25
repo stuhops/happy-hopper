@@ -100,8 +100,6 @@ export class BoardRow {
   update(elapsedTime: number): void {
     this._updateObstacles(elapsedTime);
     this._updateNextObstacles(elapsedTime);
-    // gen new obstacles
-    throw Error;
   }
 
   private _addNextObstacles(): void {

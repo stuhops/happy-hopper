@@ -39,9 +39,9 @@ export class GameBoard {
   }
 
   render(canvas: CanvasContext): void {
-    this.rows.forEach((row) => row.render(canvas));
+    this.rows.forEach((row: BoardRow) => row.render(canvas));
   }
   update(elapsedTime: number): void {
-    this.rows.forEach((row) => row.update(elapsedTime));
+    this.rows.forEach((row: BoardRow) => row.update(elapsedTime));
   }
 }
