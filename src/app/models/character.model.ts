@@ -1,6 +1,7 @@
 import { GameSpriteService } from '../services/game-sprite/game-sprite.service';
 import { GraphicService } from '../services/graphic/graphic.service';
 import { CanvasContext } from './canvas-context.model';
+import { Clock } from './clock.model';
 import { Direction } from './directions.model';
 import { Move } from './move.model';
 import { ParticleSystem } from './particle-system.model';
@@ -32,7 +33,7 @@ export class Character {
   audio?: HTMLAudioElement;
 
   dead: boolean = false;
-  dyingTimer: number | null;
+  dyingTimer: Clock;
 
   initialPosition: Position;
 
@@ -45,12 +46,12 @@ export class Character {
     this.sprite = params.sprite;
     this.dyingSprite = params.dyingSprite;
     this.dead = !!params.dead;
-    this.dyingTimer = params.dying ?? null;
+    this.dyingTimer = new Clock({ timer: 0, initialTime: Character.DEATH_LENGTH });
   }
 
   /////////////// Getters and setters ////////////
   get isDying(): boolean {
-    return !!(this.dyingTimer && this.dyingTimer > 0);
+    return this.dyingTimer.timer > 0;
   }
 
   get hitCircle(): Circle {
@@ -74,13 +75,13 @@ export class Character {
 
   reset(): void {
     this.dead = false;
-    this.dyingTimer = null;
+    this.dyingTimer.timer = 0;
     this.move.reset();
-    this.position = new Position({ ...this.initialPosition });
+    this.position = this.initialPosition.deepCopy();
   }
 
-  startDying(timer?: number): void {
-    this.dyingTimer = timer ?? Character.DEATH_LENGTH;
+  startDying(): void {
+    this.dyingTimer.reset();
     this.guts = new ParticleSystem({
       sprite: GameSpriteService.gameSprites.guts,
       center: this.position,
@@ -150,15 +151,14 @@ export class Character {
   }
 
   private _updateDying(elapsedTime: number) {
-    if (!this.dyingTimer) return;
-
-    this.dyingTimer -= elapsedTime;
+    if (!this.isDying) return;
+    this.dyingTimer.update(elapsedTime);
     this.guts?.update(elapsedTime);
-    this.position.offset({ x: 0, y: elapsedTime / 100 });
+    this.position.offset({ x: 0, y: elapsedTime / 1000 });
 
-    if (this.dyingTimer > 0) return;
+    if (this.dyingTimer.timer > 0) return;
 
-    this.dyingTimer = null;
+    this.dyingTimer.timer = 0;
     this.guts = null;
     this.dead = true;
   }
