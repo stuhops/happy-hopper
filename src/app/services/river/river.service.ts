@@ -11,6 +11,7 @@ export class RiverService extends BoardRowService {
   constructor() {
     super();
     this.defaultSprite = GameSpriteService.gameSprites.river;
+    this.defaultSafe = false;
   }
 
   newLongLogRow(position: Position, level: number): BoardRow {

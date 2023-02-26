@@ -11,6 +11,7 @@ export class RoadService extends BoardRowService {
   constructor() {
     super();
     this.defaultSprite = GameSpriteService.gameSprites.road;
+    this.defaultSafe = true;
   }
 
   newSemiRow(position: Position, level: number): BoardRow {

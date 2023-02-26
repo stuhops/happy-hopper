@@ -10,13 +10,14 @@ import { GameSpriteService } from '../game-sprite/game-sprite.service';
 })
 export class BoardRowService {
   protected defaultSprite: Sprite = GameSpriteService.gameSprites.grass;
+  protected defaultSafe: boolean = false;
 
   getDefaultRow(position: Position, options?: Partial<BoardRowParams>): BoardRow {
     return new BoardRow({
       position: position,
       move: options?.move ?? new Move({ distance: 0 }),
       background: options?.background ?? this.defaultSprite,
-      defaultSafe: options?.defaultSafe ?? false,
+      defaultSafe: options?.defaultSafe ?? this.defaultSafe,
 
       size: options?.size,
       obstacles: options?.obstacles,

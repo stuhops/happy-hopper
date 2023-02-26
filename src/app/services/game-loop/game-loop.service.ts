@@ -29,8 +29,8 @@ export class GameLoopService {
 
   render(): void {
     GraphicService.clearCanvas(this.canvas);
-    this.statusBar.render(this.canvas);
     this.game.board.render(this.canvas);
+    this.statusBar.render(this.canvas);
     this.game.character.render(this.canvas);
   }
 

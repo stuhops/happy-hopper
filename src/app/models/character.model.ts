@@ -38,7 +38,7 @@ export class Character {
   constructor(params: CharacterParams) {
     this.radius = params.radius;
     this.position = params.position;
-    this.initialPosition = new Position({ ...this.position });
+    this.initialPosition = params.position.deepCopy();
     this.audio = params.audio;
     this.move = params.move;
     this.sprite = params.sprite;
@@ -89,6 +89,7 @@ export class Character {
   }
 
   setMove(dir: Direction | null): void {
+    if (this.move.direction) return;
     if (dir === 'up' && this.position.setNextMoveCenter({ x: 0, y: -1 }, this.move.distance))
       this.position.angle = Math.PI;
     else if (dir === 'down' && this.position.setNextMoveCenter({ x: 0, y: 1 }, this.move.distance))
@@ -100,6 +101,7 @@ export class Character {
     else if (dir) return;
 
     this.move.direction = dir;
+    this.move.clock.reset();
     this._startMoveAudio();
   }
 
@@ -121,6 +123,9 @@ export class Character {
       if (this.move.clock.timer > 0) this.position.update(elapsedTime, this.move);
       else {
         this.sprite.reset();
+        this.position.x = this.position.nextCenter.x;
+        this.position.y = this.position.nextCenter.y;
+        this.position.startCenter = this.position;
         this.position.setNextMoveCenter(this.position, 0);
         this.move.reset();
       }

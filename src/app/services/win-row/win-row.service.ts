@@ -13,6 +13,7 @@ export class WinRowService extends BoardRowService {
   constructor() {
     super();
     this.defaultSprite = GameSpriteService.gameSprites.winBad;
+    this.defaultSafe = false;
   }
 
   newLilyPadRow(position: Position): BoardRow {
