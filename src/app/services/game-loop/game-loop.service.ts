@@ -52,11 +52,12 @@ export class GameLoopService {
     this.game.character.update(elapsedTime);
 
     if (!this.game.gameOver) {
-      if (!this.game.character.dead && !this.game.character.isDying)
+      if (!this.game.character.dead && !this.game.character.isDying) {
         this.game.clock.update(elapsedTime);
+        if (this.game.clock.timer <= 0) this.game.character.startDying();
+      }
 
       if (this.checkCollisions) {
-        // TODO: Look into when we change this
         this._checkCollisions();
         this.statusBar.update(elapsedTime);
         if (this.game.clock.timer <= 0) this._loseALife();
