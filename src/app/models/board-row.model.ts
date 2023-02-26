@@ -4,14 +4,14 @@ import { Collision, CollisionType } from './collision.model';
 import { Coords } from './coords.model';
 import { Game } from './game.model';
 import { Move } from './move.model';
-import { Obstacle } from './obstacle.model';
+import { Obstacle, SpriteDanger } from './obstacle.model';
 import { Position } from './position.model';
 import { Circle } from './shapes.model';
 import { Sprite } from './sprite.model';
 import { WHSize } from './wh-size.model';
 
 export interface ObstacleTimer {
-  obstacles: Obstacle[];
+  obstacles: SpriteDanger[][];
   wait: Clock;
 }
 
@@ -75,7 +75,9 @@ export class BoardRow {
       obstacles: this.nextObstacles.map((ot: ObstacleTimer) => {
         return {
           wait: ot.wait,
-          obstacles: ot.obstacles.map((o: Obstacle) => o.deepCopy()),
+          obstacles: ot.obstacles.map((sdArr: SpriteDanger[]) =>
+            Obstacle.deepCopySpriteDangerArr(sdArr),
+          ),
         };
       }),
       currObstacles: this.obstacles?.map((o: Obstacle) => o.deepCopy()),
@@ -136,13 +138,20 @@ export class BoardRow {
 
   private _addNextObstacles(): void {
     if (this.nextObstaclesIdx === null) return;
-    const obsToAdd: Obstacle[] = this.nextObstacles[this.nextObstaclesIdx].obstacles;
-    for (let idx = 0; idx < obsToAdd.length; idx++) {
-      const start: Position = this.rowStart;
-      if (start.x === 0) start.offset({ x: -obsToAdd[idx].size.width * (1 + idx), y: 0 });
-      else start.offset({ x: obsToAdd[idx].size.width * idx, y: 0 });
+    const toAdd: SpriteDanger[][] = this.nextObstacles[this.nextObstaclesIdx].obstacles;
+    for (let idx = 0; idx < toAdd.length; idx++) {
+      const pos: Position = this.rowStart.deepCopy();
+      const firstSprite: Sprite = toAdd[idx][0].sprite;
+      const size: WHSize = { ...firstSprite.drawSize };
+      if (pos.x === 0) pos.offset({ x: -size.width * (1 + idx), y: 0 });
+      else pos.offset({ x: size.width * idx, y: 0 });
 
-      const next: Obstacle = obsToAdd[idx].deepCopy();
+      const next: Obstacle = new Obstacle({
+        position: pos,
+        move: this.move.deepCopy(),
+        spriteDangerArr: Obstacle.deepCopySpriteDangerArr(toAdd[idx]),
+        size: size,
+      });
 
       this.obstacles.unshift(next);
     }

@@ -68,14 +68,17 @@ export class Obstacle {
       this.size,
       hitCircle,
     );
-    if (!isColliding) return { drift: this.move.drift };
-    else
-      return {
-        drift: this.move.drift,
-        type: this.win ? CollisionType.win : this.safe ? undefined : CollisionType.die,
-        points: this.points,
-        // TODO: Column if needed
-      };
+    if (!isColliding) return null;
+
+    let collisionType: CollisionType | null = null;
+    if (this.win) collisionType = CollisionType.win;
+    if (!this.safe) collisionType = CollisionType.die;
+    return {
+      drift: this.move.drift,
+      type: collisionType ?? undefined,
+      points: this.points,
+      // TODO: Column if needed
+    };
   }
 
   deepCopy(overrides?: Partial<ObstacleParams>): Obstacle {
@@ -115,5 +118,19 @@ export class Obstacle {
       spriteDanger.sprite.reset();
       this.spriteIdx = (this.spriteIdx + 1) % this.spriteDangerArr?.length;
     }
+  }
+
+  static deepCopySpriteDanger(spriteDanger: SpriteDanger): SpriteDanger {
+    return {
+      sprite: spriteDanger.sprite,
+      safe: spriteDanger.safe,
+      points: spriteDanger.points,
+      win: spriteDanger.win,
+      clock: spriteDanger.clock?.deepCopy(),
+    };
+  }
+
+  static deepCopySpriteDangerArr(arr: SpriteDanger[]): SpriteDanger[] {
+    return arr.map((sd: SpriteDanger) => Obstacle.deepCopySpriteDanger(sd));
   }
 }
