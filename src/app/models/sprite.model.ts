@@ -62,10 +62,13 @@ export class Sprite {
     });
   }
 
+  get duration(): number {
+    return (this.clock?.initialTime ?? 0) * this.sprites;
+  }
+
   next(): void {
-    const next = this.curr + 1 * (this.reverseUpdate ? -1 : 1);
-    if (next < 0) this.curr = next + this.sprites;
-    else this.curr = next % this.sprites;
+    const next = this.curr + 1 * (this.reverseUpdate ? -1 : 1) + this.sprites;
+    this.curr = next % this.sprites;
   }
 
   render(
@@ -124,7 +127,7 @@ export class Sprite {
   update(elapsedTime: number): void {
     if (this.clock) {
       this.clock?.update(elapsedTime);
-      if (this.clock.timer === 0) {
+      if (this.clock.timer <= 0) {
         this.clock.reset();
         this.next();
       }
