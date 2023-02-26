@@ -123,10 +123,12 @@ export class Obstacle {
     const spriteDanger: SpriteDanger = this.spriteDangerArr[this.spriteIdx];
     spriteDanger.clock?.update(elapsedTime);
     spriteDanger.sprite.update(elapsedTime);
-    if (spriteDanger.clock?.timer === 0) {
-      spriteDanger.clock?.reset();
+    if (spriteDanger.clock && spriteDanger.clock?.timer <= 0) {
+      const residualTime: number = spriteDanger.clock.timer;
+      spriteDanger.clock.reset();
       spriteDanger.sprite.reset();
       this.spriteIdx = (this.spriteIdx + 1) % this.spriteDangerArr?.length;
+      this._updateSpriteDangerArr(residualTime);
     }
   }
 
