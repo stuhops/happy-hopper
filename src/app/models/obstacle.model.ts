@@ -15,7 +15,7 @@ export interface SpriteDanger {
   safe: boolean;
   points?: number;
   win?: boolean;
-  clock?: Clock;
+  clock?: Clock; // TODO: I don't think this is used
 }
 
 export interface ObstacleParams {
@@ -101,6 +101,7 @@ export class Obstacle {
 
   update(elapsedTime: number): void {
     this.move.update(elapsedTime);
+    if (this.move.clock.timer <= 0) this.move.clock.reset();
     this.position.update(elapsedTime, this.move);
     this._updateSpriteDangerArr(elapsedTime);
   }

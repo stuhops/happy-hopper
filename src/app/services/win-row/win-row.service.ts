@@ -17,7 +17,6 @@ export class WinRowService extends BoardRowService {
   }
 
   newLilyPadRow(position: Position): BoardRow {
-    console.warn('Lily pad row not implemented');
     const row = this.getDefaultRow(position);
 
     const lilyBaseOffset: number = row.size.height * 1.5;

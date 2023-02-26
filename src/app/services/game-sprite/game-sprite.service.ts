@@ -88,6 +88,10 @@ export class GameSpriteService {
         width: 150,
         height: Game.ROW_HEIGHT * (9 / 10),
       },
+      scale: {
+        x: -1,
+        y: 1,
+      },
     }),
 
     ////////////////////// River Obstacles ////////////////////////////

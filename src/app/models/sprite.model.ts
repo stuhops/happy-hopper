@@ -15,6 +15,7 @@ export interface SpriteParams {
   offset?: Coords;
   offsetRow2?: { x: number; y: number; breakPoint: number };
   reverseUpdate?: boolean;
+  scale?: Coords;
 }
 
 export class Sprite {
@@ -27,6 +28,7 @@ export class Sprite {
   offsetRow2?: { x: number; y: number; breakPoint: number };
   reverseUpdate: boolean;
   clock?: Clock;
+  scale: Coords;
 
   private _originalSprite: number;
 
@@ -40,21 +42,23 @@ export class Sprite {
     this.offset = params.offset ?? { x: 0, y: 0 };
     this.offsetRow2 = params.offsetRow2;
     this.clock = params.clock;
+    this.scale = params.scale ?? { x: 1, y: 1 };
 
     this._originalSprite = this.curr;
   }
 
-  deepCopy(): Sprite {
+  deepCopy(overrides?: Partial<SpriteParams>): Sprite {
     return new Sprite({
-      sheet: this.sheet.deepCopy(),
-      clipSize: { ...this.clipSize },
-      drawSize: { ...this.drawSize },
-      clock: this.clock?.deepCopy(),
-      sprites: this.sprites,
-      curr: this.curr,
-      offset: { ...this.offset },
-      offsetRow2: this.offsetRow2 ? { ...this.offsetRow2 } : undefined,
-      reverseUpdate: this.reverseUpdate,
+      sheet: overrides?.sheet ?? this.sheet.deepCopy(),
+      clipSize: overrides?.clipSize ?? { ...this.clipSize },
+      drawSize: overrides?.drawSize ?? { ...this.drawSize },
+      clock: overrides?.clock ?? this.clock?.deepCopy(),
+      sprites: overrides?.sprites ?? this.sprites,
+      curr: overrides?.curr ?? this.curr,
+      offset: overrides?.offset ?? { ...this.offset },
+      offsetRow2: overrides?.offsetRow2 ?? (this.offsetRow2 ? { ...this.offsetRow2 } : undefined),
+      reverseUpdate: overrides?.reverseUpdate ?? this.reverseUpdate,
+      scale: overrides?.scale ?? { ...this.scale },
     });
   }
 
@@ -83,10 +87,16 @@ export class Sprite {
       height: options?.sizeOverride?.height ?? this.drawSize.height,
     };
 
+    const translation: Coords = {
+      x: options?.asCenter ? position.x : position.x + size.width / 2,
+      y: options?.asCenter ? position.y : position.y + size.height / 2,
+    };
+
     canvas.context.save();
-    canvas.context.translate(position.x, position.y);
+    canvas.context.translate(translation.x, translation.y);
+    canvas.context.scale(this.scale.x, this.scale.y);
     if (position instanceof Position) canvas.context.rotate(position.angle);
-    canvas.context.translate(-position.x, -position.y);
+    canvas.context.translate(-translation.x, -translation.y);
     canvas.context.drawImage(
       // Image
       this.sheet.sheet,

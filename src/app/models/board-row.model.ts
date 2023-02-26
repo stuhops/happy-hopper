@@ -142,10 +142,7 @@ export class BoardRow {
       if (start.x === 0) start.offset({ x: -obsToAdd[idx].size.width * (1 + idx), y: 0 });
       else start.offset({ x: obsToAdd[idx].size.width * idx, y: 0 });
 
-      const next: Obstacle = obsToAdd[idx].deepCopy({
-        position: start,
-        move: this.move.deepCopy(),
-      });
+      const next: Obstacle = obsToAdd[idx].deepCopy();
 
       this.obstacles.unshift(next);
     }
