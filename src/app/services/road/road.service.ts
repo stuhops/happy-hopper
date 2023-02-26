@@ -43,7 +43,10 @@ export class RoadService extends BoardRowService {
   }
 
   newYellowRow(position: Position, level: number): BoardRow {
-    const rowMove: Move = new Move({ distance: level === 0 ? 10 : 150, direction: 'left' });
+    const initialTimesByLevel: number[] = [10000, 1200];
+    const moveDistanceByLevel: number[] = [10, 15];
+
+    const rowMove: Move = new Move({ distance: moveDistanceByLevel[level], direction: 'left' });
 
     const row = this.getDefaultRow(position, { move: rowMove });
     const sprite = GameSpriteService.gameSprites.carYellow;
@@ -51,7 +54,7 @@ export class RoadService extends BoardRowService {
 
     const obsTimer: ObstacleTimer = {
       obstacles: [car],
-      wait: new Clock({ timer: 0, initialTime: 1000000 }),
+      wait: new Clock({ timer: 0, initialTime: initialTimesByLevel[level] }),
     };
 
     row.nextObstacles = [obsTimer];
