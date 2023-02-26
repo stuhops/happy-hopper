@@ -23,6 +23,7 @@ export class RiverService extends BoardRowService {
     const moveDistances: number[] = [15];
 
     const rowMove: Move = new Move({ distance: moveDistances[level], direction: 'right' });
+    rowMove.drift = { x: rowMove.ppms, y: 0 };
     const row = this.getDefaultRow(position, { move: rowMove });
 
     const sprite = GameSpriteService.gameSprites.logLg;
@@ -45,6 +46,7 @@ export class RiverService extends BoardRowService {
     const moveDistances: number[] = [25];
 
     const rowMove: Move = new Move({ distance: moveDistances[level], direction: 'right' });
+    rowMove.drift = { x: rowMove.ppms, y: 0 };
     const row = this.getDefaultRow(position, { move: rowMove });
 
     const sprite = GameSpriteService.gameSprites.logLg;
@@ -67,6 +69,7 @@ export class RiverService extends BoardRowService {
     const moveDistances: number[] = [25];
 
     const rowMove: Move = new Move({ distance: moveDistances[level], direction: 'left' });
+    rowMove.drift = { x: -rowMove.ppms, y: 0 };
     const row = this.getDefaultRow(position, { move: rowMove });
 
     const sprite = GameSpriteService.gameSprites.turtle;
@@ -89,6 +92,7 @@ export class RiverService extends BoardRowService {
     const moveDistances: number[] = [10];
 
     const rowMove: Move = new Move({ distance: moveDistances[level], direction: 'left' });
+    rowMove.drift = { x: -rowMove.ppms, y: 0 };
     const row = this.getDefaultRow(position, { move: rowMove });
 
     const swimmingSprite = GameSpriteService.gameSprites.turtle;
@@ -150,6 +154,7 @@ export class RiverService extends BoardRowService {
     const moveDistances: number[] = [10];
 
     const rowMove: Move = new Move({ distance: moveDistances[level], direction: 'right' });
+    rowMove.drift = { x: rowMove.ppms, y: 0 };
     const row = this.getDefaultRow(position, { move: rowMove });
 
     const sprite = GameSpriteService.gameSprites.logSm;

@@ -105,8 +105,14 @@ export class BoardRow {
 
       const next: Collision = {
         drift: {
-          x: Math.max(prev?.drift.x ?? 0, curr.drift.x), // This should be abs max
-          y: Math.max(prev?.drift.y ?? 0, curr.drift.y), // This should be abs max
+          x:
+            Math.abs(prev?.drift.x ?? 0) > Math.abs(curr.drift.x)
+              ? prev?.drift.x ?? 0
+              : curr.drift.x,
+          y:
+            Math.abs(prev?.drift.y ?? 0) > Math.abs(curr.drift.y)
+              ? prev?.drift.y ?? 0
+              : curr.drift.y,
         },
         type: nextCollisionType,
         points: (prev?.points ?? 0) + (curr.points ?? 0),

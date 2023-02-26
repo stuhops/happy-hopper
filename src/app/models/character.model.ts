@@ -69,7 +69,7 @@ export class Character {
       this.dyingSprite.render(this.position, canvas, { asCenter: true });
       this.guts?.render(canvas);
     } else if (!this.dead) this.sprite.render(this.position, canvas, { asCenter: true });
-    this._drawHitCircle(canvas);
+    // this._drawHitCircle(canvas); // For debugging the hit circle
   }
 
   reset(): void {
@@ -124,6 +124,7 @@ export class Character {
     if (!this.position.nextCenter) throw Error('Character must have a next center pos');
 
     this.position.x += this.move.drift.x * elapsedTime;
+    this.position.nextCenter.x += this.move.drift.x * elapsedTime;
     if (this.move.direction) {
       this.move.update(elapsedTime);
       this.sprite.curr =
