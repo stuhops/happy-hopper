@@ -24,7 +24,7 @@ export class CollisionService {
       line.point1.x ** 2 -
       line.point1.y ** 2 -
       dot ** 2 / vectDistSqrd;
-    return circleLineDistSqrd <= circle.radius ** 2;
+    return Math.abs(circleLineDistSqrd) <= circle.radius ** 2;
   }
 
   static rectCircleIntersect(coords: Coords, size: WHSize, circle: Circle): boolean {
@@ -52,7 +52,11 @@ export class CollisionService {
         // Left
         { point1: bottomLeft, point2: topLeft },
         circle,
-      )
+      ) ||
+      (circle.center.x > coords.x &&
+        circle.center.x < coords.x + size.width &&
+        circle.center.y > coords.y &&
+        circle.center.y < coords.y + size.height)
     );
   }
 }
