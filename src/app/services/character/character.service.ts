@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Character } from 'src/app/models/character.model';
+import { Clock } from 'src/app/models/clock.model';
 import { Game } from 'src/app/models/game.model';
 import { Move } from 'src/app/models/move.model';
 import { Position } from 'src/app/models/position.model';
@@ -16,6 +17,10 @@ export class CharacterService {
     const frogSprite: Sprite = new Sprite({ ...GameSpriteService.gameSprites.frog });
     const frogDyingSprite: Sprite = new Sprite({ ...GameSpriteService.gameSprites.die });
     const audio = new Audio();
+    const move = new Move({
+      distance: Game.ROW_HEIGHT,
+      clock: new Clock({ initialTime: 350 }),
+    });
     audio.src = `${environment.assetPrefix}move.mp3`;
 
     const frog = new Character({
@@ -26,7 +31,7 @@ export class CharacterService {
         angle: Math.PI,
         max: { x: Game.SQR_SIZE, y: Game.SQR_SIZE },
       }),
-      move: new Move({ distance: Game.ROW_HEIGHT }),
+      move: move,
       sprite: frogSprite,
       dyingSprite: frogDyingSprite,
     });

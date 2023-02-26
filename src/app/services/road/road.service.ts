@@ -18,20 +18,68 @@ export class RoadService extends BoardRowService {
   }
 
   newSemiRow(position: Position, level: number): BoardRow {
-    console.warn('Semi row not implemented');
-    const row = this.getDefaultRow(position);
+    if (level > 0) throw Error('level not accepted');
+    const initialTimes: number[] = [18000];
+    const moveDistances: number[] = [15];
+
+    const rowMove: Move = new Move({ distance: moveDistances[level], direction: 'left' });
+    const row = this.getDefaultRow(position, { move: rowMove });
+
+    const sprite = GameSpriteService.gameSprites.carSemi;
+    const car: SpriteDanger[] = [{ sprite: sprite.deepCopy(), safe: false }];
+
+    const obsTimer: ObstacleTimer = {
+      obstacles: [car],
+      wait: new Clock({ timer: 0, initialTime: initialTimes[level] }),
+    };
+
+    row.nextObstacles = [obsTimer];
+    row.nextObstaclesIdx = 0;
+
     return row;
   }
 
   newFireRow(position: Position, level: number): BoardRow {
-    console.warn('Fire row not implemented');
-    const row = this.getDefaultRow(position);
+    if (level > 0) throw Error('level not accepted');
+    const initialTimes: number[] = [17000];
+    const moveDistances: number[] = [12];
+
+    const rowMove: Move = new Move({ distance: moveDistances[level], direction: 'right' });
+    const row = this.getDefaultRow(position, { move: rowMove });
+
+    const sprite = GameSpriteService.gameSprites.carFire;
+    const car: SpriteDanger[] = [{ sprite: sprite.deepCopy(), safe: false }];
+
+    const obsTimer: ObstacleTimer = {
+      obstacles: [car],
+      wait: new Clock({ timer: 0, initialTime: initialTimes[level] }),
+    };
+
+    row.nextObstacles = [obsTimer];
+    row.nextObstaclesIdx = 0;
+
     return row;
   }
 
   newBlueRow(position: Position, level: number): BoardRow {
-    console.warn('Blue row not implemented');
-    const row = this.getDefaultRow(position);
+    if (level > 0) throw Error('level not accepted');
+    const initialTimes: number[] = [13000];
+    const moveDistances: number[] = [8];
+
+    const rowMove: Move = new Move({ distance: moveDistances[level], direction: 'left' });
+    const row = this.getDefaultRow(position, { move: rowMove });
+
+    const sprite = GameSpriteService.gameSprites.carBlue;
+    const car: SpriteDanger[] = [{ sprite: sprite.deepCopy(), safe: false }];
+
+    const obsTimer: ObstacleTimer = {
+      obstacles: [car],
+      wait: new Clock({ timer: 0, initialTime: initialTimes[level] }),
+    };
+
+    row.nextObstacles = [obsTimer];
+    row.nextObstaclesIdx = 0;
+
     return row;
   }
 
@@ -59,8 +107,8 @@ export class RoadService extends BoardRowService {
 
   newYellowRow(position: Position, level: number): BoardRow {
     if (level > 0) throw Error('level not accepted');
-    const initialTimes: number[] = [10000];
-    const moveDistances: number[] = [10, 15];
+    const initialTimes: number[] = [12000];
+    const moveDistances: number[] = [10];
 
     const rowMove: Move = new Move({ distance: moveDistances[level], direction: 'left' });
     const row = this.getDefaultRow(position, { move: rowMove });

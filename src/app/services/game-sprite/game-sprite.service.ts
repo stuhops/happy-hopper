@@ -24,6 +24,10 @@ export class GameSpriteService {
         width: 150,
         height: Game.ROW_HEIGHT * (9 / 10),
       },
+      scale: {
+        x: -1,
+        y: 1,
+      },
     }),
 
     [GameSprite.carFire]: new Sprite({
@@ -71,6 +75,10 @@ export class GameSpriteService {
       drawSize: {
         width: 200,
         height: Game.ROW_HEIGHT * (9 / 10),
+      },
+      scale: {
+        x: -1,
+        y: 1,
       },
     }),
 
@@ -279,7 +287,7 @@ export class GameSpriteService {
         height: 80,
       },
       drawSize: {
-        width: Game.ROW_HEIGHT + 1.5,
+        width: Game.ROW_HEIGHT + 5,
         height: Game.ROW_HEIGHT + 1.5,
       },
     }),

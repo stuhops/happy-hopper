@@ -101,7 +101,7 @@ export class Obstacle {
 
   render(canvas: CanvasContext): void {
     this.spriteDangerArr[this.spriteIdx].sprite.render(this.position, canvas);
-    this._drawHitbox(canvas);
+    // this._drawHitbox(canvas);
   }
 
   update(elapsedTime: number): void {
