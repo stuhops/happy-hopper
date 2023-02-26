@@ -1,4 +1,5 @@
 import { GameSpriteService } from '../services/game-sprite/game-sprite.service';
+import { GraphicService } from '../services/graphic/graphic.service';
 import { CanvasContext } from './canvas-context.model';
 import { Direction } from './directions.model';
 import { Move } from './move.model';
@@ -68,6 +69,7 @@ export class Character {
       this.dyingSprite.render(this.position, canvas, { asCenter: true });
       this.guts?.render(canvas);
     } else if (!this.dead) this.sprite.render(this.position, canvas, { asCenter: true });
+    this._drawHitCircle(canvas);
   }
 
   reset(): void {
@@ -111,6 +113,13 @@ export class Character {
   }
 
   ////////////////// Private /////////////////////
+  private _drawHitCircle(canvas: CanvasContext): void {
+    GraphicService.drawCircle(canvas, {
+      circle: this.hitCircle,
+      fillStyle: 'orange',
+    });
+  }
+
   private _move(elapsedTime: number): void {
     if (!this.position.nextCenter) throw Error('Character must have a next center pos');
 

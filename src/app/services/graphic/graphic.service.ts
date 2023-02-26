@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanvasContext } from 'src/app/models/canvas-context.model';
 import { Coords } from 'src/app/models/coords.model';
+import { Circle } from 'src/app/models/shapes.model';
 import { WHSize } from 'src/app/models/wh-size.model';
 
 @Injectable({
@@ -38,6 +39,36 @@ export class GraphicService {
     canvas.context.lineTo(options.position.x, options.position.y + options.size.height);
 
     canvas.context.closePath();
+    if (options.fillStyle) canvas.context.fill();
+    if (options.strokeStyle) canvas.context.stroke();
+
+    canvas.context.restore();
+  }
+
+  static drawCircle(
+    canvas: CanvasContext,
+    options: {
+      circle: Circle;
+      lineWidth?: number;
+      fillStyle?: string;
+      strokeStyle?: string;
+    },
+  ): void {
+    canvas.context.save();
+    canvas.context.lineWidth = options.lineWidth ?? 0;
+    canvas.context.fillStyle = options.fillStyle ?? 'black';
+    canvas.context.strokeStyle = options.strokeStyle ?? 'black';
+
+    canvas.context.beginPath();
+    canvas.context.arc(
+      options.circle.center.x,
+      options.circle.center.y,
+      options.circle.radius,
+      0,
+      2 * Math.PI,
+    );
+    canvas.context.closePath();
+
     if (options.fillStyle) canvas.context.fill();
     if (options.strokeStyle) canvas.context.stroke();
 

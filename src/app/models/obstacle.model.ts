@@ -1,4 +1,5 @@
 import { CollisionService } from '../services/collision/collision.service';
+import { GraphicService } from '../services/graphic/graphic.service';
 import { CanvasContext } from './canvas-context.model';
 import { Clock } from './clock.model';
 import { Collision, CollisionType } from './collision.model';
@@ -100,6 +101,7 @@ export class Obstacle {
 
   render(canvas: CanvasContext): void {
     this.spriteDangerArr[this.spriteIdx].sprite.render(this.position, canvas);
+    this._drawHitbox(canvas);
   }
 
   update(elapsedTime: number): void {
@@ -107,6 +109,14 @@ export class Obstacle {
     if (this.move.clock.timer <= 0) this.move.clock.reset();
     this.position.update(elapsedTime, this.move);
     this._updateSpriteDangerArr(elapsedTime);
+  }
+
+  private _drawHitbox(canvas: CanvasContext): void {
+    GraphicService.drawBox(canvas, {
+      position: this.position,
+      size: this.size,
+      fillStyle: this.spriteDangerArr[this.spriteIdx].safe ? 'blue' : 'red',
+    });
   }
 
   private _updateSpriteDangerArr(elapsedTime: number): void {
