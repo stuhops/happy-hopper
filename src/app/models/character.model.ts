@@ -60,7 +60,7 @@ export class Character {
         x: this.position.x,
         y: this.position.y,
       },
-      radius: this.radius * 0.75,
+      radius: this.radius * 0.5,
     };
   }
 
@@ -151,7 +151,6 @@ export class Character {
   }
 
   private _updateDying(elapsedTime: number) {
-    if (!this.isDying) return;
     this.dyingTimer.update(elapsedTime);
     this.guts?.update(elapsedTime);
     this.position.offset({ x: 0, y: elapsedTime / 1000 });
