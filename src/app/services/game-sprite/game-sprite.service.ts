@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Clock } from 'src/app/models/clock.model';
 import { GameSprite } from 'src/app/models/game-sprite.model';
 import { Game } from 'src/app/models/game.model';
 import { Sprite } from 'src/app/models/sprite.model';
@@ -138,7 +139,7 @@ export class GameSpriteService {
     [GameSprite.turtle]: new Sprite({
       sheet: SpriteSheetService.MAIN,
       offset: {
-        x: 403,
+        x: 402,
         y: 6,
       },
       clipSize: {
@@ -150,11 +151,16 @@ export class GameSpriteService {
         height: Game.ROW_HEIGHT * 0.9,
       },
       offsetRow2: {
-        x: 8,
+        x: 4,
         y: 84,
         breakPoint: 2,
       },
       sprites: 7,
+      scale: {
+        x: -1,
+        y: 1,
+      },
+      clock: new Clock({ initialTime: 200 }),
     }),
 
     [GameSprite.turtleEmerging]: new Sprite({
@@ -174,6 +180,10 @@ export class GameSpriteService {
       sprites: 4,
       curr: 3,
       reverseUpdate: true,
+      scale: {
+        x: -1,
+        y: 1,
+      },
     }),
 
     [GameSprite.turtleSink]: new Sprite({
@@ -192,6 +202,10 @@ export class GameSpriteService {
       },
       sprites: 4,
       reverseUpdate: true,
+      scale: {
+        x: -1,
+        y: 1,
+      },
     }),
 
     ////////////////////// Extra Obstacles ////////////////////////////
