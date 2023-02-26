@@ -85,34 +85,42 @@ export class BoardRow {
   }
 
   getCollision(hitCircle: Circle): Collision | null {
+    if (this.min.y > hitCircle.center.y || this.max.y < hitCircle.center.y) return null;
+
     const collisions: Collision[] = [];
     for (const obstacle of this.obstacles) {
       const collision: Collision | null = obstacle.getCollision(hitCircle);
       if (collision) collisions.push(collision);
     }
-    const next: Collision = collisions.reduce(
-      (prev: Collision, curr: Collision) => {
-        let nextCollisionType: CollisionType | undefined;
-        if (prev.type === CollisionType.die || curr.type === CollisionType.die)
-          nextCollisionType = CollisionType.die;
-        else if (prev.type === CollisionType.win || curr.type === CollisionType.win)
-          nextCollisionType = CollisionType.win;
+    let next: Collision | null = collisions.reduce((prev: Collision | null, curr: Collision) => {
+      let nextCollisionType: CollisionType | undefined;
+      if (prev?.type === CollisionType.die || curr.type === CollisionType.die)
+        nextCollisionType = CollisionType.die;
+      else if (prev?.type === CollisionType.win || curr.type === CollisionType.win)
+        nextCollisionType = CollisionType.win;
 
-        const nextColumn = Math.max(prev.column ?? -1, curr.column ?? -1); // -1 is undefined
+      const nextColumn = Math.max(prev?.column ?? -1, curr.column ?? -1); // -1 is undefined
 
-        const next: Collision = {
-          drift: {
-            x: Math.max(prev.drift.x, curr.drift.x),
-            y: Math.max(prev.drift.y, curr.drift.y),
-          },
-          type: nextCollisionType,
-          points: (prev.points ?? 0) + (curr.points ?? 0),
-          column: nextColumn !== -1 ? nextColumn : undefined,
-        };
-        return next;
-      },
-      { drift: { x: 0, y: 0 } },
-    );
+      const next: Collision = {
+        drift: {
+          x: Math.max(prev?.drift.x ?? 0, curr.drift.x), // This should be abs max
+          y: Math.max(prev?.drift.y ?? 0, curr.drift.y), // This should be abs max
+        },
+        type: nextCollisionType,
+        points: (prev?.points ?? 0) + (curr.points ?? 0),
+        column: nextColumn !== -1 ? nextColumn : undefined,
+      };
+      return next;
+    }, null);
+
+    // Default to ground
+    if (!next) {
+      next = {
+        drift: { ...this.move.drift },
+        type: this.defaultSafe ? undefined : CollisionType.die,
+      };
+    }
+
     return next;
   }
 
