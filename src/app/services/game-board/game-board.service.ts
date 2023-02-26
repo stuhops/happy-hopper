@@ -50,7 +50,7 @@ export class GameBoardService {
     // Long slow row
     const longSlowPos = position.deepCopy();
     longSlowPos.offset({ x: 0, y: Game.ROW_HEIGHT * 0 });
-    newRows.push(this._riverService.newLongLogRow(longSlowPos, level));
+    newRows.push(this._riverService.newLongSlowLogRow(longSlowPos, level));
 
     // 2x turtle row
     const turtle2Pos = position.deepCopy();
@@ -60,7 +60,7 @@ export class GameBoardService {
     // Long fast row
     const longFastPos = position.deepCopy();
     longFastPos.offset({ x: 0, y: Game.ROW_HEIGHT * 2 });
-    newRows.push(this._riverService.newLongLogRow(longFastPos, level));
+    newRows.push(this._riverService.newLongFastLogRow(longFastPos, level));
 
     // Short slow row
     const shortLogPos = position.deepCopy();

@@ -101,12 +101,16 @@ export class Obstacle {
 
   render(canvas: CanvasContext): void {
     this.spriteDangerArr[this.spriteIdx].sprite.render(this.position, canvas);
-    // this._drawHitbox(canvas);
+    // this._drawHitbox(canvas); // For debugging hit boxes
   }
 
   update(elapsedTime: number): void {
     this.move.update(elapsedTime);
-    if (this.move.clock.timer <= 0) this.move.clock.reset();
+    if (this.move.clock.timer <= 0) {
+      const residualTime = this.move.clock.timer;
+      this.move.clock.reset();
+      this.move.clock.update(-residualTime);
+    }
     this.position.update(elapsedTime, this.move);
     this._updateSpriteDangerArr(elapsedTime);
   }
@@ -128,13 +132,13 @@ export class Obstacle {
       spriteDanger.clock.reset();
       spriteDanger.sprite.reset();
       this.spriteIdx = (this.spriteIdx + 1) % this.spriteDangerArr?.length;
-      this._updateSpriteDangerArr(residualTime);
+      this._updateSpriteDangerArr(-residualTime);
     }
   }
 
   static deepCopySpriteDanger(spriteDanger: SpriteDanger): SpriteDanger {
     return {
-      sprite: spriteDanger.sprite,
+      sprite: spriteDanger.sprite.deepCopy(),
       safe: spriteDanger.safe,
       points: spriteDanger.points,
       win: spriteDanger.win,

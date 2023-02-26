@@ -166,8 +166,8 @@ export class GameSpriteService {
     [GameSprite.turtleEmerging]: new Sprite({
       sheet: SpriteSheetService.MAIN,
       offset: {
-        x: 365,
-        y: 84,
+        x: 375,
+        y: 83,
       },
       clipSize: {
         width: 72,
@@ -184,7 +184,7 @@ export class GameSpriteService {
         x: -1,
         y: 1,
       },
-      clock: new Clock({ timer: 400 }),
+      clock: new Clock({ timer: 200 }),
     }),
 
     [GameSprite.turtleSink]: new Sprite({
@@ -206,7 +206,7 @@ export class GameSpriteService {
         x: -1,
         y: 1,
       },
-      clock: new Clock({ timer: 400 }),
+      clock: new Clock({ timer: 200 }),
     }),
 
     ////////////////////// Extra Obstacles ////////////////////////////

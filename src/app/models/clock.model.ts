@@ -25,9 +25,10 @@ export class Clock {
     this.timer = this.initialTime;
   }
 
-  update(elapsedTime: number): void {
-    const next = Math.max(this.timer - elapsedTime, 0);
+  update(elapsedTime: number): number {
+    const next = this.timer - elapsedTime;
     this.timer = next;
+    return this.timer;
   }
 
   get timer(): number {

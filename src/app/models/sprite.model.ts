@@ -35,7 +35,7 @@ export class Sprite {
   constructor(params: SpriteParams) {
     this.reverseUpdate = !!params.reverseUpdate;
     this.sprites = params.sprites ?? 1;
-    this.curr = params.curr ?? (this.reverseUpdate ? 0 : this.sprites - 1);
+    this.curr = params.curr ?? (this.reverseUpdate ? this.sprites - 1 : 0);
     this.sheet = params.sheet;
     this.clipSize = params.clipSize;
     this.drawSize = params.drawSize;
@@ -128,8 +128,10 @@ export class Sprite {
     if (this.clock) {
       this.clock?.update(elapsedTime);
       if (this.clock.timer <= 0) {
+        const residualTime = this.clock.timer;
         this.clock.reset();
         this.next();
+        this.update(-residualTime);
       }
     }
   }
