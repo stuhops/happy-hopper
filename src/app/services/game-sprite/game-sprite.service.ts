@@ -184,13 +184,14 @@ export class GameSpriteService {
         x: -1,
         y: 1,
       },
+      clock: new Clock({ timer: 400 }),
     }),
 
     [GameSprite.turtleSink]: new Sprite({
       sheet: SpriteSheetService.MAIN,
       offset: {
-        x: 365,
-        y: 84,
+        x: 375,
+        y: 83,
       },
       clipSize: {
         width: 72,
@@ -201,11 +202,11 @@ export class GameSpriteService {
         height: Game.ROW_HEIGHT * 0.9,
       },
       sprites: 4,
-      reverseUpdate: true,
       scale: {
         x: -1,
         y: 1,
       },
+      clock: new Clock({ timer: 400 }),
     }),
 
     ////////////////////// Extra Obstacles ////////////////////////////
