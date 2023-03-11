@@ -43,6 +43,7 @@ export class GameLoopService {
   }
 
   stopGameLoop(): void {
+    console.warn('Game loop stopped');
     this.requestFrame = false;
   }
 
@@ -60,7 +61,6 @@ export class GameLoopService {
       if (this.checkCollisions) {
         this._checkCollisions();
         this.statusBar.update(elapsedTime);
-        if (this.game.clock.timer <= 0) this._loseALife();
       } else if (this.game.character.dead) {
         if (this.game.lives.getValue()) this._newLife();
         else this._lost();
@@ -118,6 +118,7 @@ export class GameLoopService {
   private _lost(): void {
     this.game.won = false;
     this.game.gameOver = true;
+    this.stopGameLoop();
     // TODO: High Scores
   }
 

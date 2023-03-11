@@ -62,11 +62,15 @@ export class BoardRow {
     else return this.position.deepCopy();
   }
 
-  deepCopy(options?: { offset: Coords }): BoardRow {
+  deepCopy(options?: { offset?: Coords }): BoardRow {
+    return new BoardRow(this.deepCopyParams(options));
+  }
+
+  protected deepCopyParams(options?: { offset?: Coords }): BoardRowParams {
     const position = this.position.deepCopy();
     if (options?.offset) position.offset(options.offset);
 
-    return new BoardRow({
+    return {
       position: position,
       move: this.move.deepCopy(),
       background: this.background, // TODO: Does this need to be deep copied?
@@ -83,7 +87,7 @@ export class BoardRow {
       currObstacles: this.obstacles?.map((o: Obstacle) => o.deepCopy()),
       min: { ...this.min },
       max: { ...this.max },
-    });
+    };
   }
 
   getCollision(hitCircle: Circle): Collision | null {
@@ -104,6 +108,7 @@ export class BoardRow {
       const nextColumn = Math.max(prev?.column ?? -1, curr.column ?? -1); // -1 is undefined
 
       const next: Collision = {
+        isDefault: false,
         drift: {
           x:
             Math.abs(prev?.drift.x ?? 0) > Math.abs(curr.drift.x)
@@ -124,6 +129,7 @@ export class BoardRow {
     // Default to ground
     if (!next) {
       next = {
+        isDefault: true,
         drift: { ...this.move.drift },
         type: this.defaultSafe ? undefined : CollisionType.die,
       };
@@ -133,7 +139,7 @@ export class BoardRow {
   }
 
   render(canvas: CanvasContext): void {
-    this._renderBackground(canvas);
+    this.renderBackground(canvas);
     this.obstacles.forEach((o) => o.render(canvas));
   }
 
@@ -163,7 +169,7 @@ export class BoardRow {
     }
   }
 
-  private _renderBackground(canvas: CanvasContext): void {
+  protected renderBackground(canvas: CanvasContext): void {
     const blockSize: WHSize = { width: this.size.height, height: this.size.height };
     for (let idx = 0; idx < this.size.width / this.size.height; idx++) {
       const coords: Coords = {

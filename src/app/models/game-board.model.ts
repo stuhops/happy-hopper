@@ -29,8 +29,8 @@ export class GameBoard {
       }
     }
     // TODO: Add this in once we have the board setup
-    // console.warn('Fell through collision detection');
-    return { drift: { x: 0, y: 0 } };
+    console.warn('Fell through collision detection');
+    return { drift: { x: 0, y: 0 }, isDefault: true };
   }
 
   setIdxDone(column: number): void {

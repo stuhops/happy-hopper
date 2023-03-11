@@ -76,9 +76,9 @@ export class Obstacle {
     if (!this.safe) collisionType = CollisionType.die;
     return {
       drift: this.move.drift,
+      isDefault: false,
       type: collisionType ?? undefined,
       points: this.points,
-      // TODO: Column if needed
     };
   }
 
