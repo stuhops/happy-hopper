@@ -13,7 +13,11 @@ export class BoardRowService {
   protected defaultSafe: boolean = false;
 
   getDefaultRow(position: Position, options?: Partial<BoardRowParams>): BoardRow {
-    return new BoardRow({
+    return new BoardRow(this.getDefaultRowParams(position, options));
+  }
+
+  getDefaultRowParams(position: Position, options?: Partial<BoardRowParams>): BoardRowParams {
+    return {
       position: position,
       move: options?.move ?? new Move({ distance: 0 }),
       background: options?.background ?? this.defaultSprite,
@@ -25,6 +29,6 @@ export class BoardRowService {
       currObstacles: options?.currObstacles,
       min: options?.min,
       max: options?.max,
-    });
+    };
   }
 }

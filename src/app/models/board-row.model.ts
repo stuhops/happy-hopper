@@ -66,7 +66,7 @@ export class BoardRow {
     return new BoardRow(this.deepCopyParams(options));
   }
 
-  protected deepCopyParams(options?: { offset?: Coords }): BoardRowParams {
+  deepCopyParams(options?: { offset?: Coords }): BoardRowParams {
     const position = this.position.deepCopy();
     if (options?.offset) position.offset(options.offset);
 

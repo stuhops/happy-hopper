@@ -2,14 +2,15 @@ import { BoardRow } from './board-row.model';
 import { CanvasContext } from './canvas-context.model';
 import { Collision } from './collision.model';
 import { Circle } from './shapes.model';
+import { WinRow } from './win-row.model';
 
 export interface GameBoardParams {
-  rows: BoardRow[];
+  rows: (BoardRow | WinRow)[];
   wonArr?: boolean[];
 }
 
 export class GameBoard {
-  rows: BoardRow[];
+  rows: (BoardRow | WinRow)[];
   wonArr: boolean[];
 
   constructor(params: GameBoardParams) {

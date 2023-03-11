@@ -30,9 +30,7 @@ export class WinRow extends BoardRow {
     return new WinRow(this.deepCopyParams(options));
   }
 
-  protected override deepCopyParams(
-    options?: { offset?: Coords | undefined } | undefined,
-  ): WinRowParams {
+  override deepCopyParams(options?: { offset?: Coords | undefined } | undefined): WinRowParams {
     return {
       ...super.deepCopyParams(options),
       completedSprite: this.completedSprite.deepCopy(),
