@@ -92,10 +92,8 @@ export class GameLoopService {
     this.game.character.move.drift = collision.drift ?? { x: 0, y: 0 };
     if (collision.points) this.game.score = this.game.score + collision.points;
 
-    if (collision.type === 'win') {
-      if (!collision.column) throw Error('Must have a column assigned with a win condition');
-      this._success(collision.column);
-    } else if (collision.type === 'die') this._loseALife();
+    if (collision.type === 'win') this._success();
+    else if (collision.type === 'die') this._loseALife();
   }
 
   private _gameLoop(time: number) {
@@ -128,14 +126,14 @@ export class GameLoopService {
     this.game.clock.reset();
   }
 
-  private _success(column: number): void {
-    this.game.board.setIdxDone(column);
+  private _success(): void {
     this.game.waitTimer.reset();
-    this._newLife();
     if (this.game.board.allIdxDone()) {
       this.game.score += 1000;
       this.game.won = true;
       this.game.gameOver = true;
+    } else {
+      this._newLife();
     }
   }
 }

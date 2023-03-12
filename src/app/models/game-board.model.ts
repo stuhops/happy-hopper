@@ -6,20 +6,22 @@ import { WinRow } from './win-row.model';
 
 export interface GameBoardParams {
   rows: (BoardRow | WinRow)[];
-  wonArr?: boolean[];
 }
 
 export class GameBoard {
   rows: (BoardRow | WinRow)[];
-  wonArr: boolean[];
 
   constructor(params: GameBoardParams) {
     this.rows = params.rows;
-    this.wonArr = params.wonArr ?? [false, false, false, false, false];
   }
 
   allIdxDone(): boolean {
-    return this.wonArr.reduce((prev: boolean, curr: boolean) => prev && curr, true);
+    for (const row of this.rows) {
+      if (row instanceof WinRow) {
+        if (!row.completed) return false;
+      }
+    }
+    return true;
   }
 
   getCollision(hitCircle: Circle): Collision {
@@ -29,14 +31,7 @@ export class GameBoard {
         if (collision) return collision;
       }
     }
-    // TODO: Add this in once we have the board setup
-    console.warn('Fell through collision detection');
-    return { drift: { x: 0, y: 0 }, isDefault: true };
-  }
-
-  setIdxDone(column: number): void {
-    if (column < 0 || column >= this.wonArr.length) throw Error;
-    this.wonArr[column] = true;
+    throw Error();
   }
 
   render(canvas: CanvasContext): void {

@@ -51,8 +51,11 @@ export class WinRow extends BoardRow {
     for (let idx = 0; idx < this.winSlots.length; idx++) {
       const slotCollision = this.winSlots[idx].target.getCollision(hitCircle);
       if (slotCollision) {
+        if (this.winSlots[idx].completedSprite)
+          return { drift: this.move.drift, type: CollisionType.die, isDefault: false };
         collision = slotCollision;
         this.winSlots[idx].completedSprite = this.completedSprite.deepCopy();
+        // TODO: Particle system if it just won
         break;
       }
     }
@@ -61,7 +64,14 @@ export class WinRow extends BoardRow {
 
   override render(canvas: CanvasContext): void {
     super.renderBackground(canvas);
-    this.winSlots.forEach((s) => s.target.deepCopy());
+    this.winSlots.forEach((s) => {
+      s.target.render(canvas);
+      s.completedSprite?.render(s.target.position, canvas);
+    });
     this.obstacles.forEach((o) => o.render(canvas));
+  }
+
+  get completed(): boolean {
+    return this.winSlots.reduce((prev, curr) => prev && !!curr.completedSprite, true);
   }
 }
