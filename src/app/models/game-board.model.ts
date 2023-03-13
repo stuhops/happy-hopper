@@ -31,7 +31,7 @@ export class GameBoard {
         if (collision) return collision;
       }
     }
-    throw Error();
+    return { drift: { x: 0, y: 0 }, isDefault: true };
   }
 
   render(canvas: CanvasContext): void {
