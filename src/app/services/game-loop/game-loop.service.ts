@@ -31,7 +31,7 @@ export class GameLoopService {
     GraphicService.clearCanvas(this.canvas);
     this.game.board.render(this.canvas);
     this.statusBar.render(this.canvas);
-    this.game.character.render(this.canvas);
+    if (!this.game.gameOver || !this.game.won) this.game.character.render(this.canvas);
   }
 
   startGameLoop(): void {
