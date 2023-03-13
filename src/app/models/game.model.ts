@@ -18,7 +18,7 @@ export interface GameParams {
   gameOver?: false | boolean;
   gameOverClock?: Clock;
   clock?: Clock;
-  // obstacles?: Obstacle[];
+  playing?: boolean;
 }
 
 export class Game {
@@ -39,7 +39,7 @@ export class Game {
   gameOverClock: Clock;
   clock: Clock;
   board: GameBoard;
-  // obstacles: Obstacle[];
+  playing: boolean;
 
   constructor(params: GameParams) {
     this.levels = params.levels ?? 2;
@@ -53,7 +53,7 @@ export class Game {
     this.gameOver = !!params.gameOver;
     this.gameOverClock = params.gameOverClock ?? new Clock({ initialTime: 3000 });
     this.clock = params.clock ?? new Clock();
-    // obstacles: Obstacle[];
+    this.playing = !!params.playing;
   }
 
   get score(): number {

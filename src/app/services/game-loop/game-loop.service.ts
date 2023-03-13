@@ -22,6 +22,7 @@ export class GameLoopService {
 
   init(game: Game, statusBar: StatusBar, canvas: CanvasContext, start: boolean = true): void {
     this.game = game;
+    this.game.playing = true;
     this.statusBar = statusBar;
     this.canvas = canvas;
     if (start) this.startGameLoop();
@@ -44,6 +45,7 @@ export class GameLoopService {
 
   stopGameLoop(): void {
     console.warn('Game loop stopped');
+    this.game.playing = false;
     this.requestFrame = false;
   }
 
@@ -53,12 +55,12 @@ export class GameLoopService {
     this.game.character.update(elapsedTime);
 
     if (!this.game.gameOver) {
-      if (!this.game.character.dead && !this.game.character.isDying) {
+      if (this.game.playing && !this.game.character.dead && !this.game.character.isDying) {
         this.game.clock.update(elapsedTime);
         if (this.game.clock.timer <= 0) this.game.character.startDying();
       }
 
-      if (this.checkCollisions) {
+      if (this.checkCollisions && this.game.playing) {
         this._checkCollisions();
         this.statusBar.update(elapsedTime);
       } else if (this.game.character.dead) {
@@ -114,9 +116,9 @@ export class GameLoopService {
   }
 
   private _lost(): void {
+    this.game.playing = false;
     this.game.won = false;
     this.game.gameOver = true;
-    this.stopGameLoop();
     // TODO: High Scores
   }
 
