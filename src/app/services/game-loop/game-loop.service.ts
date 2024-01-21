@@ -6,6 +6,7 @@ import { Circle } from 'src/app/models/shapes.model';
 import { StatusBar } from 'src/app/models/status-bar.model';
 import { GraphicService } from '../graphic/graphic.service';
 import { InputService } from '../input/input.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +19,7 @@ export class GameLoopService {
   statusBar!: StatusBar;
   canvas!: CanvasContext;
 
-  constructor(private _inputService: InputService) {}
+  constructor(private _inputService: InputService, private _router: Router) {}
 
   init(game: Game, statusBar: StatusBar, canvas: CanvasContext, start: boolean = true): void {
     this.game = game;
@@ -55,7 +56,7 @@ export class GameLoopService {
     this.game.character.update(elapsedTime);
 
     if (!this.game.gameOver) this._inProgressUpdate(elapsedTime);
-    else this._gameOverUpdate(elapsedTime);
+    else if (this.game.playing) this._gameOverUpdate(elapsedTime);
   }
 
   private _checkCollisions(): void {
@@ -92,16 +93,12 @@ export class GameLoopService {
   private _gameOverAction(): void {
     this.game.character.shouldRender = false;
 
-    if (this.game.level + 1 === this.game.levels) {
-      console.warn('TODO: Nav to game over (with win condition)');
-    } else if (this.game.won) {
-      this.game.level++;
-      this.game.character.shouldRender = true;
-      this.startGameLoop();
-    } else {
-      this.game.level = 0;
-      this.startGameLoop();
-    }
+    // TODO: Remove once we do overlay screens because this isn't very secure
+    sessionStorage.setItem('score', JSON.stringify(this.game.score));
+    sessionStorage.setItem('won', JSON.stringify(this.game.won));
+
+    if (this.game.won) this._nextLevel();
+    else this._lost();
   }
 
   private _inProgressUpdate(elapsedTime: number): void {
@@ -117,7 +114,10 @@ export class GameLoopService {
       this.statusBar.update(elapsedTime);
     } else if (this.game.character.dead) {
       if (this.game.lives.getValue()) this._newLife();
-      else this._lost();
+      else {
+        this.game.won = false;
+        this.game.gameOver = true;
+      }
     }
   }
 
@@ -129,15 +129,25 @@ export class GameLoopService {
 
   private _lost(): void {
     this.game.playing = false;
-    this.game.won = false;
-    this.game.gameOver = true;
-    // TODO: High Scores
+    this.game.level = 0;
+
+    // TODO: Make a lost screen that overlays the game so it looks like it keeps going
+    this.stopGameLoop();
+    this._router.navigate(['game-over']);
   }
 
   private _newLife(): void {
     this.game.character.reset();
     this.checkCollisions = true;
     this.game.clock.reset();
+  }
+
+  private _nextLevel(): void {
+    if (this.game.level + 1 === this.game.levels) this._won();
+    else {
+      this.game.level++;
+      this.game.character.shouldRender = true;
+    }
   }
 
   private _success(): void {
@@ -149,5 +159,15 @@ export class GameLoopService {
     } else {
       this._newLife();
     }
+  }
+
+  private _won(): void {
+    this.game.playing = false;
+    this.game.level = 0;
+
+    // TODO: Make this overlay the game and not an actual navigation
+    // TODO: High Scores
+    this.stopGameLoop();
+    this._router.navigate(['game-over']);
   }
 }
