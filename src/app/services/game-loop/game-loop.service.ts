@@ -7,6 +7,7 @@ import { StatusBar } from 'src/app/models/status-bar.model';
 import { GraphicService } from '../graphic/graphic.service';
 import { InputService } from '../input/input.service';
 import { Router } from '@angular/router';
+import { GameBoardService } from '../game-board/game-board.service';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +20,11 @@ export class GameLoopService {
   statusBar!: StatusBar;
   canvas!: CanvasContext;
 
-  constructor(private _inputService: InputService, private _router: Router) {}
+  constructor(
+    private _inputService: InputService,
+    private _gameBoardService: GameBoardService,
+    private _router: Router,
+  ) {}
 
   init(game: Game, statusBar: StatusBar, canvas: CanvasContext, start: boolean = true): void {
     this.game = game;
@@ -147,7 +152,10 @@ export class GameLoopService {
   private _nextLevel(): void {
     this.game.level++;
     if (this.game.level === this.game.levels) this._won();
-    else this.game.startLevel();
+    else {
+      this.game.board = this._gameBoardService.generateBoard(this.game.level, this.game.board);
+      this.game.startLevel();
+    }
   }
 
   private _success(): void {

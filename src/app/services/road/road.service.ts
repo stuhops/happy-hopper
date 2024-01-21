@@ -17,7 +17,7 @@ export class RoadService extends BoardRowService {
     this.defaultSafe = true;
   }
 
-  newSemiRow(position: Position, level: number): BoardRow {
+  newSemiRow(position: Position, level: number, from?: BoardRow): BoardRow {
     if (level > 0) throw Error('level not accepted');
     const initialTimes: number[] = [18000];
     const moveDistances: number[] = [15];
@@ -35,11 +35,12 @@ export class RoadService extends BoardRowService {
 
     row.nextObstacles = [obsTimer];
     row.nextObstaclesIdx = 0;
+    row.obstacles = from?.obstacles ?? [];
 
     return row;
   }
 
-  newFireRow(position: Position, level: number): BoardRow {
+  newFireRow(position: Position, level: number, from?: BoardRow): BoardRow {
     if (level > 0) throw Error('level not accepted');
     const initialTimes: number[] = [17000];
     const moveDistances: number[] = [12];
@@ -57,11 +58,12 @@ export class RoadService extends BoardRowService {
 
     row.nextObstacles = [obsTimer];
     row.nextObstaclesIdx = 0;
+    row.obstacles = from?.obstacles ?? [];
 
     return row;
   }
 
-  newBlueRow(position: Position, level: number): BoardRow {
+  newBlueRow(position: Position, level: number, from?: BoardRow): BoardRow {
     if (level > 0) throw Error('level not accepted');
     const initialTimes: number[] = [13000];
     const moveDistances: number[] = [8];
@@ -79,11 +81,12 @@ export class RoadService extends BoardRowService {
 
     row.nextObstacles = [obsTimer];
     row.nextObstaclesIdx = 0;
+    row.obstacles = from?.obstacles ?? [];
 
     return row;
   }
 
-  newGreenRow(position: Position, level: number): BoardRow {
+  newGreenRow(position: Position, level: number, from?: BoardRow): BoardRow {
     if (level > 0) throw Error('level not accepted');
     const initialTimes: number[] = [8000];
     const moveDistances: number[] = [11];
@@ -101,11 +104,12 @@ export class RoadService extends BoardRowService {
 
     row.nextObstacles = [obsTimer];
     row.nextObstaclesIdx = 0;
+    row.obstacles = from?.obstacles ?? [];
 
     return row;
   }
 
-  newYellowRow(position: Position, level: number): BoardRow {
+  newYellowRow(position: Position, level: number, from?: BoardRow): BoardRow {
     if (level > 0) throw Error('level not accepted');
     const initialTimes: number[] = [12000];
     const moveDistances: number[] = [10];
@@ -123,6 +127,7 @@ export class RoadService extends BoardRowService {
 
     row.nextObstacles = [obsTimer];
     row.nextObstaclesIdx = 0;
+    row.obstacles = from?.obstacles ?? [];
 
     return row;
   }

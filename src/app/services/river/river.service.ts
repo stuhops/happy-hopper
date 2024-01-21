@@ -17,7 +17,7 @@ export class RiverService extends BoardRowService {
     this.defaultSafe = false;
   }
 
-  newLongSlowLogRow(position: Position, level: number): BoardRow {
+  newLongSlowLogRow(position: Position, level: number, from?: BoardRow): BoardRow {
     if (level > 0) throw Error('level not accepted');
     const initialTimes: number[] = [10000];
     const moveDistances: number[] = [15];
@@ -36,11 +36,12 @@ export class RiverService extends BoardRowService {
 
     row.nextObstacles = [obsTimer];
     row.nextObstaclesIdx = 0;
+    row.obstacles = from?.obstacles ?? [];
 
     return row;
   }
 
-  newLongFastLogRow(position: Position, level: number): BoardRow {
+  newLongFastLogRow(position: Position, level: number, from?: BoardRow): BoardRow {
     if (level > 0) throw Error('level not accepted');
     const initialTimes: number[] = [8000];
     const moveDistances: number[] = [25];
@@ -59,11 +60,12 @@ export class RiverService extends BoardRowService {
 
     row.nextObstacles = [obsTimer];
     row.nextObstaclesIdx = 0;
+    row.obstacles = from?.obstacles ?? [];
 
     return row;
   }
 
-  newTurtle2Row(position: Position, level: number): BoardRow {
+  newTurtle2Row(position: Position, level: number, from?: BoardRow): BoardRow {
     if (level > 0) throw Error('level not accepted');
     const initialTimes: number[] = [4000];
     const moveDistances: number[] = [25];
@@ -82,11 +84,12 @@ export class RiverService extends BoardRowService {
 
     row.nextObstacles = [obsTimer];
     row.nextObstaclesIdx = 0;
+    row.obstacles = from?.obstacles ?? [];
 
     return row;
   }
 
-  newTurtle3Row(position: Position, level: number): BoardRow {
+  newTurtle3Row(position: Position, level: number, from?: BoardRow): BoardRow {
     if (level > 0) throw Error('level not accepted');
     const initialTimes: number[] = [11000];
     const moveDistances: number[] = [10];
@@ -144,11 +147,12 @@ export class RiverService extends BoardRowService {
 
     row.nextObstacles = [turtleTimer];
     row.nextObstaclesIdx = 0;
+    row.obstacles = from?.obstacles ?? [];
 
     return row;
   }
 
-  newShortLogRow(position: Position, level: number): BoardRow {
+  newShortLogRow(position: Position, level: number, from?: BoardRow): BoardRow {
     if (level > 0) throw Error('level not accepted');
     const initialTimes: number[] = [8000];
     const moveDistances: number[] = [10];
@@ -167,6 +171,7 @@ export class RiverService extends BoardRowService {
 
     row.nextObstacles = [obsTimer];
     row.nextObstaclesIdx = 0;
+    row.obstacles = from?.obstacles ?? [];
 
     return row;
   }

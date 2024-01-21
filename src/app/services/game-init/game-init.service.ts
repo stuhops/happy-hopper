@@ -19,7 +19,7 @@ export class GameInitService {
     const level = 0;
     return new Game({
       level: level,
-      levels: 2,
+      levels: 1,
       character: this._characterService.frog(),
       board: this._gameBoardService.generateBoard(level),
     });

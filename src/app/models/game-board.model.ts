@@ -39,7 +39,7 @@ export class GameBoard {
   }
 
   startLevel(): void {
-    this.rows.forEach(row => row.startLevel())
+    this.rows.forEach((row) => row.startLevel());
   }
 
   update(elapsedTime: number): void {

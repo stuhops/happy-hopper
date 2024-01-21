@@ -42,7 +42,7 @@ export class Game {
   playing: boolean;
 
   constructor(params: GameParams) {
-    this.levels = params.levels ?? 2;
+    this.levels = params.levels ?? 1;
     this.character = params.character;
     this.board = params.board;
     this.waitTimer = new Clock({ timer: 0, initialTime: params.waitTimer ?? 1000 });
