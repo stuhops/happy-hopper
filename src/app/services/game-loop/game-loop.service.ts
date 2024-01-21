@@ -155,7 +155,7 @@ export class GameLoopService {
     this.game.waitTimer.reset();
     this.game.score += 200;
     if (this.game.board.allIdxDone()) {
-      this.game.score += 1000;
+      this.game.score += 1000 + 500 * this.game.lives.getValue();
       this.game.won = true;
       this.game.gameOver = true;
     } else {

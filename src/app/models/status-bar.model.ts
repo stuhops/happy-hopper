@@ -125,6 +125,6 @@ export class StatusBar {
   }
 
   private _updateScore(elapsedTime: number): void {
-    this.score = Math.max(this.score - elapsedTime, 0);
+    this.score = Math.max(this.score - elapsedTime / 100, 100);
   }
 }
