@@ -24,6 +24,7 @@ export class GameLoopService {
   init(game: Game, statusBar: StatusBar, canvas: CanvasContext, start: boolean = true): void {
     this.game = game;
     this.game.playing = true;
+    this.checkCollisions = true;
     this.statusBar = statusBar;
     this.canvas = canvas;
     if (start) this.startGameLoop();
@@ -152,6 +153,7 @@ export class GameLoopService {
 
   private _success(): void {
     this.game.waitTimer.reset();
+    this.game.score += 200;
     if (this.game.board.allIdxDone()) {
       this.game.score += 1000;
       this.game.won = true;
