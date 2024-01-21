@@ -1,4 +1,5 @@
 export interface EnvironmentInterface {
+  version: string;
   assetPrefix: 'assets/' | string;
   highScores: {
     key: 'frogger-scores' | string;
