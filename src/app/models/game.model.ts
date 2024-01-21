@@ -56,6 +56,17 @@ export class Game {
     this.playing = !!params.playing;
   }
 
+  startLevel(): void {
+    this.character.reset();
+    this.waitTimer.reset();
+    this.lives.next(3);
+    this.won = false;
+    this.gameOver = false;
+    this.clock.reset();
+    this.board.startLevel();
+    this.playing = true;
+  }
+
   get score(): number {
     return this._score.getValue();
   }

@@ -2,9 +2,12 @@ import { BoardRow, BoardRowParams } from './board-row.model';
 import { CanvasContext } from './canvas-context.model';
 import { Collision, CollisionType } from './collision.model';
 import { Coords } from './coords.model';
-import { Obstacle } from './obstacle.model';
+import { Obstacle, SpriteDanger } from './obstacle.model';
+import { Position } from './position.model';
 import { Circle } from './shapes.model';
 import { Sprite } from './sprite.model';
+import { GameSpriteService } from '../services/game-sprite/game-sprite.service';
+import { Move } from './move.model';
 
 export interface WinSlot {
   target: Obstacle;
@@ -69,6 +72,34 @@ export class WinRow extends BoardRow {
       s.completedSprite?.render(s.target.position, canvas);
     });
     this.obstacles.forEach((o) => o.render(canvas));
+  }
+
+  override startLevel(): void {
+    const lilyBaseOffset: number = this.size.height * 1.5;
+    const lilyDistBetween: number = this.size.height * 2.6;
+
+    for (let i = 0; i < 5; i++) {
+      const lilyPos: Position = new Position({
+        x: this.position.x + lilyBaseOffset + lilyDistBetween * i,
+        y: this.position.y,
+      });
+      const spriteDanger: SpriteDanger = {
+        sprite: GameSpriteService.gameSprites.winGood,
+        safe: true,
+        win: true,
+      };
+
+      const lilyPad: WinSlot = {
+        target: new Obstacle({
+          position: lilyPos,
+          move: new Move({ distance: 0 }),
+          spriteDangerArr: [spriteDanger],
+          size: { width: this.size.height, height: this.size.height },
+        }),
+        completedSprite: null,
+      };
+      this.winSlots.push(lilyPad);
+    }
   }
 
   get completed(): boolean {

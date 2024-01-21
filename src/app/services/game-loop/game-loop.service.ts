@@ -27,6 +27,7 @@ export class GameLoopService {
     this.checkCollisions = true;
     this.statusBar = statusBar;
     this.canvas = canvas;
+    this.game.startLevel();
     if (start) this.startGameLoop();
   }
 
@@ -144,11 +145,9 @@ export class GameLoopService {
   }
 
   private _nextLevel(): void {
-    if (this.game.level + 1 === this.game.levels) this._won();
-    else {
-      this.game.level++;
-      this.game.character.shouldRender = true;
-    }
+    this.game.level++;
+    if (this.game.level === this.game.levels) this._won();
+    else this.game.startLevel();
   }
 
   private _success(): void {

@@ -143,6 +143,10 @@ export class BoardRow {
     this.obstacles.forEach((o) => o.render(canvas));
   }
 
+  startLevel(): void {
+    // Nothing to do here
+  }
+
   update(elapsedTime: number): void {
     this._updateObstacles(elapsedTime);
     this._updateNextObstacles(elapsedTime);
