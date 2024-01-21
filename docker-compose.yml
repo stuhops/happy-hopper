@@ -1,5 +1,5 @@
 version: "3.8"
-name: "Frogger Angular"
+name: "frogger-angular"
 
 services:
   client:

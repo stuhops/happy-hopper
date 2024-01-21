@@ -6,10 +6,10 @@ import { GameBoard } from './game-board.model';
 export interface GameParams {
   // Required
   levels: number;
-  character: Character;
   board: GameBoard;
 
   // Optional
+  character?: Character;
   waitTimer?: 1000 | number;
   won?: boolean;
   score?: 100 | number;
@@ -26,7 +26,7 @@ export class Game {
   static ROWS = 14;
   static ROW_HEIGHT = Game.SQR_SIZE / Game.ROWS;
 
-  character: Character;
+  character: Character | null;
 
   levels: number;
   waitTimer: Clock;
@@ -43,7 +43,7 @@ export class Game {
 
   constructor(params: GameParams) {
     this.levels = params.levels ?? 2;
-    this.character = params.character;
+    this.character = params.character ?? null;
     this.board = params.board;
     this.waitTimer = new Clock({ timer: 0, initialTime: params.waitTimer ?? 1000 });
     this._score = new BehaviorSubject<number>(params.score ?? 100);

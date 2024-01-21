@@ -18,6 +18,7 @@ export interface CharacterParams {
   audio?: HTMLAudioElement;
   dead?: false | boolean;
   dying?: number;
+  hasMoved?: boolean;
 }
 
 export class Character {
@@ -31,6 +32,7 @@ export class Character {
   dyingSprite: Sprite;
   guts: ParticleSystem | null = null;
   audio?: HTMLAudioElement;
+  hasMoved: boolean;
 
   dead: boolean = false;
   dyingTimer: Clock;
@@ -42,6 +44,7 @@ export class Character {
     this.position = params.position;
     this.initialPosition = params.position.deepCopy();
     this.audio = params.audio;
+    this.hasMoved = !!params.hasMoved;
     this.move = params.move;
     this.sprite = params.sprite;
     this.dyingSprite = params.dyingSprite;
@@ -75,6 +78,7 @@ export class Character {
 
   reset(): void {
     this.dead = false;
+    this.hasMoved = false;
     this.dyingTimer.timer = 0;
     this.move.reset();
     this.position = this.initialPosition.deepCopy();
@@ -106,6 +110,7 @@ export class Character {
     this.move.direction = dir;
     this.move.clock.reset();
     this._startMoveAudio();
+    this.hasMoved = true;
   }
 
   update(elapsedTime: number): void {
@@ -114,6 +119,9 @@ export class Character {
   }
 
   ////////////////// Private /////////////////////
+  /**
+   * @description for debugging purposes
+   */
   private _drawHitCircle(canvas: CanvasContext): void {
     GraphicService.drawCircle(canvas, {
       circle: this.hitCircle,
