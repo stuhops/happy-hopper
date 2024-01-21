@@ -19,6 +19,7 @@ export interface CharacterParams {
   dead?: false | boolean;
   dying?: number;
   hasMoved?: boolean;
+  shouldRender?: true | boolean;
 }
 
 export class Character {
@@ -33,6 +34,7 @@ export class Character {
   guts: ParticleSystem | null = null;
   audio?: HTMLAudioElement;
   hasMoved: boolean;
+  shouldRender: boolean;
 
   dead: boolean = false;
   dyingTimer: Clock;
@@ -50,6 +52,7 @@ export class Character {
     this.dyingSprite = params.dyingSprite;
     this.dead = !!params.dead;
     this.dyingTimer = new Clock({ timer: 0, initialTime: Character.DEATH_LENGTH });
+    this.shouldRender = params.shouldRender ?? true;
   }
 
   /////////////// Getters and setters ////////////
@@ -69,6 +72,7 @@ export class Character {
 
   /////////////////  Public //////////////////////
   render(canvas: CanvasContext): void {
+    if (!this.shouldRender) return;
     if (this.isDying) {
       this.dyingSprite.render(this.position, canvas, { asCenter: true });
       this.guts?.render(canvas);
@@ -77,6 +81,7 @@ export class Character {
   }
 
   reset(): void {
+    this.shouldRender = true;
     this.dead = false;
     this.hasMoved = false;
     this.dyingTimer.timer = 0;

@@ -32,7 +32,7 @@ export class GameLoopService {
     GraphicService.clearCanvas(this.canvas);
     this.game.board.render(this.canvas);
     this.statusBar.render(this.canvas);
-    if (!this.game.gameOver || !this.game.won) this.game.character?.render(this.canvas);
+    if (!this.game.gameOver || !this.game.won) this.game.character.render(this.canvas);
   }
 
   startGameLoop(): void {
@@ -52,14 +52,13 @@ export class GameLoopService {
   update(elapsedTime: number) {
     if (this.game.waitTimer.timer > 0) this.game.waitTimer.update(elapsedTime);
     this.game.board.update(elapsedTime);
-    this.game.character?.update(elapsedTime);
+    this.game.character.update(elapsedTime);
 
-    if (!this.game.gameOver && this.game.character?.hasMoved) this._inProgressUpdate(elapsedTime);
+    if (!this.game.gameOver) this._inProgressUpdate(elapsedTime);
     else this._gameOverUpdate(elapsedTime);
   }
 
   private _checkCollisions(): void {
-    if (!this.game.character) return;
     this.game.character.move.drift = { x: 0, y: 0 };
     const hitCircle: Circle = this.game.character.hitCircle;
     const collision: Collision = this.game.board.getCollision(hitCircle);
@@ -75,8 +74,7 @@ export class GameLoopService {
     const elapsedTime: number = time - this.lastCycle;
     this.lastCycle = time;
 
-    if (this.game.waitTimer.timer <= 0 && this.game.character)
-      this._inputService.processInput(this.game.character);
+    if (this.game.waitTimer.timer <= 0) this._inputService.processInput(this.game.character);
     this.update(elapsedTime);
     this.render();
 
@@ -92,10 +90,13 @@ export class GameLoopService {
    * @description To be called when the game is over and we want to reset or navigate
    */
   private _gameOverAction(): void {
+    this.game.character.shouldRender = false;
+
     if (this.game.level + 1 === this.game.levels) {
       console.warn('TODO: Nav to game over (with win condition)');
     } else if (this.game.won) {
       this.game.level++;
+      this.game.character.shouldRender = true;
       this.startGameLoop();
     } else {
       this.game.level = 0;
@@ -104,15 +105,17 @@ export class GameLoopService {
   }
 
   private _inProgressUpdate(elapsedTime: number): void {
-    if (this.game.playing && !this.game.character?.dead && !this.game.character?.isDying) {
+    if (!this.game.character.hasMoved) return;
+
+    if (this.game.playing && !this.game.character.dead && !this.game.character.isDying) {
       this.game.clock.update(elapsedTime);
-      if (this.game.clock.timer <= 0) this.game.character?.startDying();
+      if (this.game.clock.timer <= 0) this.game.character.startDying();
     }
 
     if (this.checkCollisions && this.game.playing) {
       this._checkCollisions();
       this.statusBar.update(elapsedTime);
-    } else if (this.game.character?.dead) {
+    } else if (this.game.character.dead) {
       if (this.game.lives.getValue()) this._newLife();
       else this._lost();
     }
@@ -120,7 +123,7 @@ export class GameLoopService {
 
   private _loseALife(): void {
     this.game.lives.next(this.game.lives.getValue() - 1);
-    this.game.character?.startDying();
+    this.game.character.startDying();
     this.checkCollisions = false;
   }
 
@@ -132,7 +135,7 @@ export class GameLoopService {
   }
 
   private _newLife(): void {
-    this.game.character?.reset();
+    this.game.character.reset();
     this.checkCollisions = true;
     this.game.clock.reset();
   }
