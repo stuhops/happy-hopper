@@ -3,9 +3,9 @@ import { Router } from '@angular/router';
 import { CanvasContext } from 'src/app/models/canvas-context.model';
 import { Game } from 'src/app/models/game.model';
 import { StatusBar } from 'src/app/models/status-bar.model';
-import { GameInitService } from 'src/app/services/game-init/game-init.service';
-import { GameLoopService } from 'src/app/services/game-loop/game-loop.service';
-import { GraphicService } from 'src/app/services/graphic/graphic.service';
+import { GameInitService } from 'happy-hopper/services/game-init/game-init.service';
+import { GameLoopService } from 'happy-hopper/services/game-loop/game-loop.service';
+import { GraphicService } from 'happy-hopper/services/graphic/graphic.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
