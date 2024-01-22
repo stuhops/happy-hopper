@@ -1,5 +1,5 @@
-import { RecordsService } from '../records/records.service';
-import { Game } from 'src/app/models/game.model';
+import { RecordsService } from './records.service';
+import { Game } from 'src/models/game.model';
 import { HighScore } from 'src/app/models/high-score.model';
 import { StatusBar } from 'src/app/models/status-bar.model';
 import { CharacterService } from '../character/character.service';

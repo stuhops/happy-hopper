@@ -1,10 +1,10 @@
 import { BoardRow, ObstacleTimer } from 'src/app/models/board-row.model';
-import { Position } from 'src/app/models/position.model';
+import { Position } from 'src/models/position.model';
 import { BoardRowService } from '../board-row/board-row.service';
-import { GameSpriteService } from '../game-sprite/game-sprite.service';
-import { Move } from '../../models/move.model';
-import { Clock } from 'src/app/models/clock.model';
-import { SpriteDanger } from 'src/app/models/obstacle.model';
+import { GameSpriteService } from './game-sprite.service';
+import { Move } from '../models/move.model';
+import { Clock } from 'src/models/clock.model';
+import { SpriteDanger } from 'src/models/obstacle.model';
 
 export class RoadService extends BoardRowService {
   static newSemiRow(position: Position, level: number, from?: BoardRow): BoardRow {

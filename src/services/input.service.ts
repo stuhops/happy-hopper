@@ -1,5 +1,5 @@
-import { Character } from 'src/app/models/character.model';
-import { Controls } from 'src/app/models/controls.model';
+import { Character } from 'src/models/character.model';
+import { Controls } from 'src/models/controls.model';
 
 export class InputService {
   inputBuffer: Record<string, string> = {};

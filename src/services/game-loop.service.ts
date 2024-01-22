@@ -1,10 +1,10 @@
 import { CanvasContext } from 'src/app/models/canvas-context.model';
-import { Collision } from 'src/app/models/collision.model';
-import { Game } from 'src/app/models/game.model';
-import { Circle } from 'src/app/models/shapes.model';
+import { Collision } from 'src/models/collision.model';
+import { Game } from 'src/models/game.model';
+import { Circle } from 'src/models/shapes.model';
 import { StatusBar } from 'src/app/models/status-bar.model';
-import { GraphicService } from '../graphic/graphic.service';
-import { InputService } from '../input/input.service';
+import { GraphicService } from './graphic.service';
+import { InputService } from './input.service';
 import { GameBoardService } from '../game-board/game-board.service';
 
 export class GameLoopService {

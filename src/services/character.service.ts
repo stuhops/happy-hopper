@@ -1,10 +1,10 @@
-import { Character } from 'src/app/models/character.model';
-import { Clock } from 'src/app/models/clock.model';
-import { Game } from 'src/app/models/game.model';
-import { Move } from 'src/app/models/move.model';
-import { Position } from 'src/app/models/position.model';
-import { Sprite } from 'src/app/models/sprite.model';
-import { GameSpriteService } from '../game-sprite/game-sprite.service';
+import { Character } from 'src/models/character.model';
+import { Clock } from 'src/models/clock.model';
+import { Game } from 'src/models/game.model';
+import { Move } from 'src/models/move.model';
+import { Position } from 'src/models/position.model';
+import { Sprite } from 'src/models/sprite.model';
+import { GameSpriteService } from './game-sprite.service';
 import { environment } from 'src/environments/environment';
 
 export class CharacterService {

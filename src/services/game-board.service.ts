@@ -1,12 +1,12 @@
 import { BoardRow } from 'src/app/models/board-row.model';
 import { GameBoard } from 'src/app/models/game-board.model';
-import { Game } from 'src/app/models/game.model';
-import { Move } from 'src/app/models/move.model';
-import { Position } from 'src/app/models/position.model';
-import { GameSpriteService } from '../game-sprite/game-sprite.service';
-import { RiverService } from '../river/river.service';
-import { RoadService } from '../road/road.service';
-import { WinRowService } from '../win-row/win-row.service';
+import { Game } from 'src/models/game.model';
+import { Move } from 'src/models/move.model';
+import { Position } from 'src/models/position.model';
+import { GameSpriteService } from './game-sprite.service';
+import { RiverService } from './river.service';
+import { RoadService } from './road.service';
+import { WinRowService } from './win-row.service';
 
 export class GameBoardService {
   static generateBoard(level: number, from?: GameBoard): GameBoard {

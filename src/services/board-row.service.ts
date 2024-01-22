@@ -1,8 +1,8 @@
-import { Sprite } from "src/app/models/sprite.model";
-import { GameSpriteService } from "../game-sprite/game-sprite.service";
-import { Position } from "src/app/models/position.model";
-import { BoardRow, BoardRowParams } from "src/app/models/board-row.model";
-import { Move } from "src/app/models/move.model";
+import { Sprite } from 'src/models/sprite.model';
+import { GameSpriteService } from './game-sprite.service';
+import { Position } from 'src/models/position.model';
+import { BoardRow, BoardRowParams } from 'src/app/models/board-row.model';
+import { Move } from 'src/models/move.model';
 
 export class BoardRowService {
   static defaultSprite: Sprite = GameSpriteService.gameSprites.grass;

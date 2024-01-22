@@ -1,6 +1,6 @@
 import { CanvasContext } from 'src/app/models/canvas-context.model';
-import { Coords } from 'src/app/models/coords.model';
-import { Circle } from 'src/app/models/shapes.model';
+import { Coords } from 'src/models/coords.model';
+import { Circle } from 'src/models/shapes.model';
 import { WHSize } from 'src/app/models/wh-size.model';
 
 export class GraphicService {

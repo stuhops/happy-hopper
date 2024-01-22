@@ -1,10 +1,10 @@
 import { BoardRow, ObstacleTimer } from 'src/app/models/board-row.model';
-import { Clock } from 'src/app/models/clock.model';
-import { Move } from 'src/app/models/move.model';
-import { Obstacle, SpriteDanger } from 'src/app/models/obstacle.model';
-import { Position } from 'src/app/models/position.model';
+import { Clock } from 'src/models/clock.model';
+import { Move } from 'src/models/move.model';
+import { Obstacle, SpriteDanger } from 'src/models/obstacle.model';
+import { Position } from 'src/models/position.model';
 import { BoardRowService } from '../board-row/board-row.service';
-import { GameSpriteService } from '../game-sprite/game-sprite.service';
+import { GameSpriteService } from './game-sprite.service';
 
 export class RiverService extends BoardRowService {
   static newLongSlowLogRow(position: Position, level: number, from?: BoardRow): BoardRow {

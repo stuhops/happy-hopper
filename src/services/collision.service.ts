@@ -1,5 +1,5 @@
-import { Coords } from 'src/app/models/coords.model';
-import { Circle, Line } from 'src/app/models/shapes.model';
+import { Coords } from 'src/models/coords.model';
+import { Circle, Line } from 'src/models/shapes.model';
 import { WHSize } from 'src/app/models/wh-size.model';
 
 export class CollisionService {
