@@ -11,7 +11,7 @@
 
 # Environments
 .env
-src/environments/environment.ts
+src/environments/environment.override.ts
 
 # Node
 /node_modules
