@@ -1,12 +1,8 @@
-import { Injectable } from '@angular/core';
 import { CanvasContext } from 'src/app/models/canvas-context.model';
 import { Coords } from 'src/app/models/coords.model';
 import { Circle } from 'src/app/models/shapes.model';
 import { WHSize } from 'src/app/models/wh-size.model';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class GraphicService {
   static clearCanvas(canvasContext: CanvasContext) {
     canvasContext.context.clearRect(0, 0, canvasContext.canvas.width, canvasContext.canvas.height);

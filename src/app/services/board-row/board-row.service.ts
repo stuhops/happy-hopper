@@ -1,22 +1,21 @@
-import { Injectable } from '@angular/core';
-import { BoardRow, BoardRowParams } from 'src/app/models/board-row.model';
-import { Move } from 'src/app/models/move.model';
-import { Position } from 'src/app/models/position.model';
-import { Sprite } from 'src/app/models/sprite.model';
-import { GameSpriteService } from '../game-sprite/game-sprite.service';
+import { Sprite } from "src/app/models/sprite.model";
+import { GameSpriteService } from "../game-sprite/game-sprite.service";
+import { Position } from "src/app/models/position.model";
+import { BoardRow, BoardRowParams } from "src/app/models/board-row.model";
+import { Move } from "src/app/models/move.model";
 
-@Injectable({
-  providedIn: 'root',
-})
 export class BoardRowService {
-  protected defaultSprite: Sprite = GameSpriteService.gameSprites.grass;
-  protected defaultSafe: boolean = false;
+  static defaultSprite: Sprite = GameSpriteService.gameSprites.grass;
+  static defaultSafe: boolean = false;
 
-  getDefaultRow(position: Position, options?: Partial<BoardRowParams>): BoardRow {
-    return new BoardRow(this.getDefaultRowParams(position, options));
+  static getDefaultRow(position: Position, options?: Partial<BoardRowParams>): BoardRow {
+    return new BoardRow(BoardRowService.getDefaultRowParams(position, options));
   }
 
-  getDefaultRowParams(position: Position, options?: Partial<BoardRowParams>): BoardRowParams {
+  static getDefaultRowParams(
+    position: Position,
+    options?: Partial<BoardRowParams>,
+  ): BoardRowParams {
     return {
       position: position,
       move: options?.move ?? new Move({ distance: 0 }),

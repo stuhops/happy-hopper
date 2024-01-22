@@ -1,10 +1,6 @@
-import { Injectable } from '@angular/core';
 import { HighScore } from 'src/app/models/high-score.model';
 import { environment } from 'src/environments/environment';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class RecordsService {
   static get highScores(): HighScore[] {
     const jsonScores: string | null = localStorage.getItem(environment.highScores.key);

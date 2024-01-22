@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 import { CanvasContext } from 'src/app/models/canvas-context.model';
 import { Collision } from 'src/app/models/collision.model';
 import { Game } from 'src/app/models/game.model';
@@ -6,12 +5,8 @@ import { Circle } from 'src/app/models/shapes.model';
 import { StatusBar } from 'src/app/models/status-bar.model';
 import { GraphicService } from '../graphic/graphic.service';
 import { InputService } from '../input/input.service';
-import { Router } from '@angular/router';
 import { GameBoardService } from '../game-board/game-board.service';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class GameLoopService {
   lastCycle: number = performance.now();
   requestFrame: boolean = true;
@@ -19,12 +14,7 @@ export class GameLoopService {
   game!: Game;
   statusBar!: StatusBar;
   canvas!: CanvasContext;
-
-  constructor(
-    private _inputService: InputService,
-    private _gameBoardService: GameBoardService,
-    private _router: Router,
-  ) {}
+  inputService: InputService = new InputService();
 
   init(game: Game, statusBar: StatusBar, canvas: CanvasContext, start: boolean = true): void {
     this.game = game;
@@ -82,7 +72,7 @@ export class GameLoopService {
     const elapsedTime: number = time - this.lastCycle;
     this.lastCycle = time;
 
-    if (this.game.waitTimer.timer <= 0) this._inputService.processInput(this.game.character);
+    if (this.game.waitTimer.timer <= 0) this.inputService.processInput(this.game.character);
     this.update(elapsedTime);
     this.render();
 
@@ -140,7 +130,8 @@ export class GameLoopService {
 
     // TODO: Make a lost screen that overlays the game so it looks like it keeps going
     this.stopGameLoop();
-    this._router.navigate(['game-over']);
+    const event = new CustomEvent('game-over');
+    document.dispatchEvent(event);
   }
 
   private _newLife(): void {
@@ -153,7 +144,7 @@ export class GameLoopService {
     this.game.level++;
     if (this.game.level === this.game.levels) this._won();
     else {
-      this.game.board = this._gameBoardService.generateBoard(this.game.level, this.game.board);
+      this.game.board = GameBoardService.generateBoard(this.game.level, this.game.board);
       this.game.startLevel();
     }
   }
@@ -177,6 +168,7 @@ export class GameLoopService {
     // TODO: Make this overlay the game and not an actual navigation
     // TODO: High Scores
     this.stopGameLoop();
-    this._router.navigate(['game-over']);
+    const event = new CustomEvent('game-over');
+    document.dispatchEvent(event);
   }
 }

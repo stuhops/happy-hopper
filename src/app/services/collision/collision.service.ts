@@ -1,11 +1,7 @@
-import { Injectable } from '@angular/core';
 import { Coords } from 'src/app/models/coords.model';
 import { Circle, Line } from 'src/app/models/shapes.model';
 import { WHSize } from 'src/app/models/wh-size.model';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class CollisionService {
   static lineCircleIntersect(line: Line, circle: Circle): boolean {
     const v1 = { x: line.point2.x - line.point1.x, y: line.point2.y - line.point1.y };

@@ -1,10 +1,6 @@
-import { Injectable } from '@angular/core';
 import { Character } from 'src/app/models/character.model';
 import { Controls } from 'src/app/models/controls.model';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class InputService {
   inputBuffer: Record<string, string> = {};
   controls: Controls = Controls.FromLocalStorage();

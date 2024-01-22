@@ -10,7 +10,6 @@ import { GameOverComponent } from './game-over/game-over.component';
 @NgModule({
   declarations: [AppComponent, HomeComponent, PlayComponent, GameOverComponent],
   imports: [AppRoutingModule, BrowserModule],
-  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,10 +1,6 @@
-import { Injectable } from '@angular/core';
 import { SpriteSheet } from 'src/app/models/sprite-sheet.model';
 import { environment } from 'src/environments/environment';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class SpriteSheetService {
   static ALLIGATOR = new SpriteSheet({
     src: `${environment.assetPrefix}alligator.png`,

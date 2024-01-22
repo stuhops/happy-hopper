@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 import { BoardRow, ObstacleTimer } from 'src/app/models/board-row.model';
 import { Clock } from 'src/app/models/clock.model';
 import { Move } from 'src/app/models/move.model';
@@ -7,24 +6,18 @@ import { Position } from 'src/app/models/position.model';
 import { BoardRowService } from '../board-row/board-row.service';
 import { GameSpriteService } from '../game-sprite/game-sprite.service';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class RiverService extends BoardRowService {
-  constructor() {
-    super();
-    this.defaultSprite = GameSpriteService.gameSprites.river;
-    this.defaultSafe = false;
-  }
-
-  newLongSlowLogRow(position: Position, level: number, from?: BoardRow): BoardRow {
+  static newLongSlowLogRow(position: Position, level: number, from?: BoardRow): BoardRow {
     if (level > 0) throw Error('level not accepted');
     const initialTimes: number[] = [10000];
     const moveDistances: number[] = [15];
 
     const rowMove: Move = new Move({ distance: moveDistances[level], direction: 'right' });
     rowMove.drift = { x: rowMove.ppms, y: 0 };
-    const row = this.getDefaultRow(position, { move: rowMove });
+    const row = RiverService.getDefaultRow(position, {
+      move: rowMove,
+      background: GameSpriteService.gameSprites.river,
+    });
 
     const sprite = GameSpriteService.gameSprites.logLg;
     const log: SpriteDanger[] = [{ sprite: sprite.deepCopy(), safe: true }];
@@ -41,14 +34,17 @@ export class RiverService extends BoardRowService {
     return row;
   }
 
-  newLongFastLogRow(position: Position, level: number, from?: BoardRow): BoardRow {
+  static newLongFastLogRow(position: Position, level: number, from?: BoardRow): BoardRow {
     if (level > 0) throw Error('level not accepted');
     const initialTimes: number[] = [8000];
     const moveDistances: number[] = [25];
 
     const rowMove: Move = new Move({ distance: moveDistances[level], direction: 'right' });
     rowMove.drift = { x: rowMove.ppms, y: 0 };
-    const row = this.getDefaultRow(position, { move: rowMove });
+    const row = RiverService.getDefaultRow(position, {
+      move: rowMove,
+      background: GameSpriteService.gameSprites.river,
+    });
 
     const sprite = GameSpriteService.gameSprites.logLg;
     const log: SpriteDanger[] = [{ sprite: sprite.deepCopy(), safe: true }];
@@ -65,14 +61,17 @@ export class RiverService extends BoardRowService {
     return row;
   }
 
-  newTurtle2Row(position: Position, level: number, from?: BoardRow): BoardRow {
+  static newTurtle2Row(position: Position, level: number, from?: BoardRow): BoardRow {
     if (level > 0) throw Error('level not accepted');
     const initialTimes: number[] = [4000];
     const moveDistances: number[] = [25];
 
     const rowMove: Move = new Move({ distance: moveDistances[level], direction: 'left' });
     rowMove.drift = { x: -rowMove.ppms, y: 0 };
-    const row = this.getDefaultRow(position, { move: rowMove });
+    const row = RiverService.getDefaultRow(position, {
+      move: rowMove,
+      background: GameSpriteService.gameSprites.river,
+    });
 
     const sprite = GameSpriteService.gameSprites.turtle;
     const turtle: SpriteDanger[] = [{ sprite: sprite.deepCopy(), safe: true }];
@@ -89,14 +88,17 @@ export class RiverService extends BoardRowService {
     return row;
   }
 
-  newTurtle3Row(position: Position, level: number, from?: BoardRow): BoardRow {
+  static newTurtle3Row(position: Position, level: number, from?: BoardRow): BoardRow {
     if (level > 0) throw Error('level not accepted');
     const initialTimes: number[] = [11000];
     const moveDistances: number[] = [10];
 
     const rowMove: Move = new Move({ distance: moveDistances[level], direction: 'left' });
     rowMove.drift = { x: -rowMove.ppms, y: 0 };
-    const row = this.getDefaultRow(position, { move: rowMove });
+    const row = RiverService.getDefaultRow(position, {
+      move: rowMove,
+      background: GameSpriteService.gameSprites.river,
+    });
 
     const swimmingSprite = GameSpriteService.gameSprites.turtle;
     const turtleSwimming: SpriteDanger = {
@@ -152,14 +154,17 @@ export class RiverService extends BoardRowService {
     return row;
   }
 
-  newShortLogRow(position: Position, level: number, from?: BoardRow): BoardRow {
+  static newShortLogRow(position: Position, level: number, from?: BoardRow): BoardRow {
     if (level > 0) throw Error('level not accepted');
     const initialTimes: number[] = [8000];
     const moveDistances: number[] = [10];
 
     const rowMove: Move = new Move({ distance: moveDistances[level], direction: 'right' });
     rowMove.drift = { x: rowMove.ppms, y: 0 };
-    const row = this.getDefaultRow(position, { move: rowMove });
+    const row = RiverService.getDefaultRow(position, {
+      move: rowMove,
+      background: GameSpriteService.gameSprites.river,
+    });
 
     const sprite = GameSpriteService.gameSprites.logSm;
     const log: SpriteDanger[] = [{ sprite: sprite.deepCopy(), safe: true }];

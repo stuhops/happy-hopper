@@ -1,18 +1,14 @@
-import { Injectable } from '@angular/core';
 import { Character } from 'src/app/models/character.model';
 import { Clock } from 'src/app/models/clock.model';
 import { Game } from 'src/app/models/game.model';
 import { Move } from 'src/app/models/move.model';
 import { Position } from 'src/app/models/position.model';
 import { Sprite } from 'src/app/models/sprite.model';
-import { environment } from 'src/environments/environment';
 import { GameSpriteService } from '../game-sprite/game-sprite.service';
+import { environment } from 'src/environments/environment';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class CharacterService {
-  frog(): Character {
+  static frog(): Character {
     const charRadius = Game.ROW_HEIGHT / 2;
     const frogSprite: Sprite = new Sprite({ ...GameSpriteService.gameSprites.frog });
     const frogDyingSprite: Sprite = new Sprite({ ...GameSpriteService.gameSprites.die });

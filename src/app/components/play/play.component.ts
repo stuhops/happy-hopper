@@ -1,4 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { CanvasContext } from 'src/app/models/canvas-context.model';
 import { Game } from 'src/app/models/game.model';
 import { StatusBar } from 'src/app/models/status-bar.model';
@@ -14,6 +15,7 @@ import { environment } from 'src/environments/environment';
 })
 export class PlayComponent {
   @ViewChild('gameCanvas') gameCanvas!: ElementRef;
+  gameLoopService = new GameLoopService();
   canvasContext!: CanvasContext;
 
   game!: Game;
@@ -22,13 +24,17 @@ export class PlayComponent {
   env = environment;
   Game = Game;
 
-  constructor(private _gameInit: GameInitService, private _gameLoop: GameLoopService) {}
+  constructor(private _router: Router) {}
 
   ngAfterViewInit(): void {
     this.refreshCanvasContext();
-    this.game = this._gameInit.game();
-    this.statusBar = this._gameInit.statusBar(this.game);
-    this._gameLoop.init(this.game, this.statusBar, this.canvasContext);
+    this.game = GameInitService.game();
+    this.statusBar = GameInitService.statusBar(this.game);
+    this.gameLoopService.init(this.game, this.statusBar, this.canvasContext);
+
+    document.addEventListener('game-over', () => {
+      this._router.navigate(['game-over']);
+    });
   }
 
   refreshCanvasContext(): void {

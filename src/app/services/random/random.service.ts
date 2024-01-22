@@ -1,10 +1,6 @@
-import { Injectable } from '@angular/core';
 import { Coords } from 'src/app/models/coords.model';
 import { BasicStats } from 'src/app/models/stats.model';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class RandomService {
   static nextDouble(): number {
     return Math.random();

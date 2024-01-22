@@ -1,13 +1,9 @@
-import { Injectable } from '@angular/core';
 import { Clock } from 'src/app/models/clock.model';
 import { GameSprite } from 'src/app/models/game-sprite.model';
 import { Game } from 'src/app/models/game.model';
 import { Sprite } from 'src/app/models/sprite.model';
 import { SpriteSheetService } from '../sprite-sheet/sprite-sheet.service';
 
-@Injectable({
-  providedIn: 'root',
-})
 export class GameSpriteService {
   static gameSprites: Record<GameSprite, Sprite> = {
     ///////////////////////// Road Obstacles //////////////////////////
