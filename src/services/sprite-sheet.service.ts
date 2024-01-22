@@ -1,4 +1,4 @@
-import { SpriteSheet } from 'src/app/models/sprite-sheet.model';
+import { SpriteSheet } from 'src/models/sprite-sheet.model';
 import { environment } from 'src/environments/environment';
 
 export class SpriteSheetService {

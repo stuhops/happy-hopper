@@ -1,7 +1,7 @@
 import { RecordsService } from './records.service';
 import { Game } from 'src/models/game.model';
-import { HighScore } from 'src/app/models/high-score.model';
-import { StatusBar } from 'src/app/models/status-bar.model';
+import { HighScore } from 'src/models/high-score.model';
+import { StatusBar } from 'src/models/status-bar.model';
 import { CharacterService } from '../character/character.service';
 import { GameBoardService } from '../game-board/game-board.service';
 

@@ -1,4 +1,4 @@
-import { BoardRow, ObstacleTimer } from 'src/app/models/board-row.model';
+import { BoardRow, ObstacleTimer } from 'src/models/board-row.model';
 import { Clock } from 'src/models/clock.model';
 import { Move } from 'src/models/move.model';
 import { Obstacle, SpriteDanger } from 'src/models/obstacle.model';

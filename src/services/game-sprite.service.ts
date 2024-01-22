@@ -1,5 +1,5 @@
 import { Clock } from 'src/models/clock.model';
-import { GameSprite } from 'src/app/models/game-sprite.model';
+import { GameSprite } from 'src/models/game-sprite.model';
 import { Game } from 'src/models/game.model';
 import { Sprite } from 'src/models/sprite.model';
 import { SpriteSheetService } from './sprite-sheet.service';

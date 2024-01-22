@@ -1,5 +1,5 @@
-import { BoardRow } from 'src/app/models/board-row.model';
-import { GameBoard } from 'src/app/models/game-board.model';
+import { BoardRow } from 'src/models/board-row.model';
+import { GameBoard } from 'src/models/game-board.model';
 import { Game } from 'src/models/game.model';
 import { Move } from 'src/models/move.model';
 import { Position } from 'src/models/position.model';

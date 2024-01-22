@@ -1,4 +1,4 @@
-import { BoardRow, ObstacleTimer } from 'src/app/models/board-row.model';
+import { BoardRow, ObstacleTimer } from 'src/models/board-row.model';
 import { Position } from 'src/models/position.model';
 import { BoardRowService } from '../board-row/board-row.service';
 import { GameSpriteService } from './game-sprite.service';

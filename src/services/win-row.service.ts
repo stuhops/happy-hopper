@@ -1,6 +1,6 @@
-import { BoardRow } from 'src/app/models/board-row.model';
+import { BoardRow } from 'src/models/board-row.model';
 import { Position } from 'src/models/position.model';
-import { WinRow } from 'src/app/models/win-row.model';
+import { WinRow } from 'src/models/win-row.model';
 import { BoardRowService } from '../board-row/board-row.service';
 import { GameSpriteService } from './game-sprite.service';
 

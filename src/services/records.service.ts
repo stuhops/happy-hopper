@@ -1,4 +1,4 @@
-import { HighScore } from 'src/app/models/high-score.model';
+import { HighScore } from 'src/models/high-score.model';
 import { environment } from 'src/environments/environment';
 
 export class RecordsService {

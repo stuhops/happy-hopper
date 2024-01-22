@@ -1,7 +1,7 @@
 import { Sprite } from 'src/models/sprite.model';
 import { GameSpriteService } from './game-sprite.service';
 import { Position } from 'src/models/position.model';
-import { BoardRow, BoardRowParams } from 'src/app/models/board-row.model';
+import { BoardRow, BoardRowParams } from 'src/models/board-row.model';
 import { Move } from 'src/models/move.model';
 
 export class BoardRowService {
