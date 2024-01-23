@@ -18,21 +18,32 @@ export class GameLoop {
   private _statusBar!: StatusBar;
 
   constructor(
-    canvas: CanvasContext,
+    canvas: HTMLCanvasElement,
     options?: {
       game?: Game; // Create's own by default
       statusBar?: StatusBar; // Create's own by default
       start?: boolean; // Defaults true
     },
   ) {
+    this._canvas = this.getCanvasContext(canvas);
+    if (canvas.width !== Game.SQR_SIZE || canvas.height !== Game.SQR_SIZE)
+      throw Error(
+        'Canvas element is not of correct size. Please set the height and width to CANVAS_SIZE',
+      );
+
     this._game = options.game ?? GameInitService.game();
     this._statusBar = options.statusBar ?? GameInitService.statusBar(this._game);
 
     this._game.playing = true;
     this._shouldCheckCollisions = true;
-    this._canvas = canvas;
     this._game.startLevel();
     if (options.start ?? true) this.startGameLoop();
+  }
+
+  getCanvasContext(canvas: HTMLCanvasElement): CanvasContext {
+    const context = canvas.getContext('2d');
+    if (!context) throw Error('Invalid canvas element. There is no valid .getContext function');
+    return { canvas, context };
   }
 
   startGameLoop(): void {
