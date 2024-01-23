@@ -1,5 +1,5 @@
-import { Coords } from 'src/models/coords.model';
-import { BasicStats } from 'src/models/stats.model';
+import { Coords } from '../models/coords.model';
+import { BasicStats } from '../models/stats.model';
 
 export class RandomService {
   static nextDouble(): number {

@@ -1,6 +1,6 @@
 import { BehaviorSubject } from 'rxjs';
-import { environment } from 'src/environments/environment';
-import { GraphicService } from '../services/graphic/graphic.service';
+import { environment } from '../environments/environment';
+import { GraphicService } from '../services/graphic.service';
 import { CanvasContext } from './canvas-context.model';
 import { Clock } from './clock.model';
 import { Coords } from './coords.model';

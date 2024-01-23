@@ -1,7 +1,7 @@
-import { CanvasContext } from 'src/models/canvas-context.model';
-import { Coords } from 'src/models/coords.model';
-import { Circle } from 'src/models/shapes.model';
-import { WHSize } from 'src/models/wh-size.model';
+import { CanvasContext } from '../models/canvas-context.model';
+import { Coords } from '../models/coords.model';
+import { Circle } from '../models/shapes.model';
+import { WHSize } from '../models/wh-size.model';
 
 export class GraphicService {
   static clearCanvas(canvasContext: CanvasContext) {

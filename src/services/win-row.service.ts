@@ -1,7 +1,7 @@
-import { BoardRow } from 'src/models/board-row.model';
-import { Position } from 'src/models/position.model';
-import { WinRow } from 'src/models/win-row.model';
-import { BoardRowService } from '../board-row/board-row.service';
+import { BoardRow } from '../models/board-row.model';
+import { Position } from '../models/position.model';
+import { WinRow } from '../models/win-row.model';
+import { BoardRowService } from './board-row.service';
 import { GameSpriteService } from './game-sprite.service';
 
 export class WinRowService extends BoardRowService {

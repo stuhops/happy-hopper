@@ -1,4 +1,4 @@
-import { RandomService } from '../services/random/random.service';
+import { RandomService } from '../services/random.service';
 import { CanvasContext } from './canvas-context.model';
 import { Coords } from './coords.model';
 import { Particle } from './particle.model';

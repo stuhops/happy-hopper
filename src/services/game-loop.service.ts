@@ -1,8 +1,8 @@
-import { CanvasContext } from 'src/models/canvas-context.model';
-import { Collision } from 'src/models/collision.model';
-import { Game } from 'src/models/game.model';
-import { Circle } from 'src/models/shapes.model';
-import { StatusBar } from 'src/models/status-bar.model';
+import { CanvasContext } from '../models/canvas-context.model';
+import { Collision } from '../models/collision.model';
+import { Game } from '../models/game.model';
+import { Circle } from '../models/shapes.model';
+import { StatusBar } from '../models/status-bar.model';
 import { GraphicService } from './graphic.service';
 import { InputService } from './input.service';
 import { GameBoardService } from '../game-board/game-board.service';

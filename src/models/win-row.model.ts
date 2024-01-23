@@ -6,7 +6,7 @@ import { Obstacle, SpriteDanger } from './obstacle.model';
 import { Position } from './position.model';
 import { Circle } from './shapes.model';
 import { Sprite } from './sprite.model';
-import { GameSpriteService } from '../services/game-sprite/game-sprite.service';
+import { GameSpriteService } from '../services/game-sprite.service';
 import { Move } from './move.model';
 
 export interface WinSlot {

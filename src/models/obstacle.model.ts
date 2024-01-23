@@ -1,5 +1,5 @@
-import { CollisionService } from '../services/collision/collision.service';
-import { GraphicService } from '../services/graphic/graphic.service';
+import { CollisionService } from '../services/collision.service';
+import { GraphicService } from '../services/graphic.service';
 import { CanvasContext } from './canvas-context.model';
 import { Clock } from './clock.model';
 import { Collision, CollisionType } from './collision.model';

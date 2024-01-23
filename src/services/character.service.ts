@@ -1,9 +1,9 @@
-import { Character } from 'src/models/character.model';
-import { Clock } from 'src/models/clock.model';
-import { Game } from 'src/models/game.model';
-import { Move } from 'src/models/move.model';
-import { Position } from 'src/models/position.model';
-import { Sprite } from 'src/models/sprite.model';
+import { Character } from '../models/character.model';
+import { Clock } from '../models/clock.model';
+import { Game } from '../models/game.model';
+import { Move } from '../models/move.model';
+import { Position } from '../models/position.model';
+import { Sprite } from '../models/sprite.model';
 import { GameSpriteService } from './game-sprite.service';
 import { environment } from 'src/environments/environment';
 

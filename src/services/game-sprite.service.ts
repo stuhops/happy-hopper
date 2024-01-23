@@ -1,7 +1,7 @@
-import { Clock } from 'src/models/clock.model';
-import { GameSprite } from 'src/models/game-sprite.model';
-import { Game } from 'src/models/game.model';
-import { Sprite } from 'src/models/sprite.model';
+import { Clock } from '../models/clock.model';
+import { GameSprite } from '../models/game-sprite.model';
+import { Game } from '../models/game.model';
+import { Sprite } from '../models/sprite.model';
 import { SpriteSheetService } from './sprite-sheet.service';
 
 export class GameSpriteService {

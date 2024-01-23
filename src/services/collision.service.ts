@@ -1,6 +1,6 @@
-import { Coords } from 'src/models/coords.model';
-import { Circle, Line } from 'src/models/shapes.model';
-import { WHSize } from 'src/models/wh-size.model';
+import { Coords } from '../models/coords.model';
+import { Circle, Line } from '../models/shapes.model';
+import { WHSize } from '../models/wh-size.model';
 
 export class CollisionService {
   static lineCircleIntersect(line: Line, circle: Circle): boolean {

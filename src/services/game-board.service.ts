@@ -1,8 +1,8 @@
-import { BoardRow } from 'src/models/board-row.model';
-import { GameBoard } from 'src/models/game-board.model';
-import { Game } from 'src/models/game.model';
-import { Move } from 'src/models/move.model';
-import { Position } from 'src/models/position.model';
+import { BoardRow } from '../models/board-row.model';
+import { GameBoard } from '../models/game-board.model';
+import { Game } from '../models/game.model';
+import { Move } from '../models/move.model';
+import { Position } from '../models/position.model';
 import { GameSpriteService } from './game-sprite.service';
 import { RiverService } from './river.service';
 import { RoadService } from './road.service';
