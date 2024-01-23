@@ -1,6 +1,11 @@
 {
   "name": "happy-hopper",
-  "version": "1.0.3",
+  "version": "1.0.4",
+  "scripts": {
+    "build:dev": "tsc -p tsconfig.dev.json",
+    "build:prod": "tsc -p tsconfig.prod.json",
+    "deploy": "npm run build:prod && npm publish"
+  },
   "description": "Provides the game Happy Hopper given a square html canvas element",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
