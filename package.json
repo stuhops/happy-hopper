@@ -1,0 +1,10 @@
+{
+  "name": "happy-hopper",
+  "version": "1.0.3",
+  "description": "Provides the game Happy Hopper given a square html canvas element",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "/dist"
+  ]
+}
