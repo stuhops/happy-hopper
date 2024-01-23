@@ -1,5 +1,5 @@
 import { SpriteSheet } from '../models/sprite-sheet.model';
-import { environment } from 'src/environments/environment';
+import { environment } from '../environments/environment';
 
 export class SpriteSheetService {
   static ALLIGATOR = new SpriteSheet({

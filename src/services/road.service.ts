@@ -1,6 +1,6 @@
 import { BoardRow, ObstacleTimer } from '../models/board-row.model';
 import { Position } from '../models/position.model';
-import { BoardRowService } from '../board-row/board-row.service';
+import { BoardRowService } from './board-row.service';
 import { GameSpriteService } from './game-sprite.service';
 import { Move } from '../models/move.model';
 import { Clock } from '../models/clock.model';

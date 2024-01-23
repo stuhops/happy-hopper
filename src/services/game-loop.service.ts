@@ -5,7 +5,7 @@ import { Circle } from '../models/shapes.model';
 import { StatusBar } from '../models/status-bar.model';
 import { GraphicService } from './graphic.service';
 import { InputService } from './input.service';
-import { GameBoardService } from '../game-board/game-board.service';
+import { GameBoardService } from './game-board.service';
 import { GameInitService } from './game-init.service';
 
 export class GameLoop {
@@ -100,7 +100,7 @@ export class GameLoop {
     }
 
     if (this._shouldCheckCollisions && this._game.playing) {
-      this._shouldCheckCollisions();
+      this._checkCollisions();
       this._statusBar.update(elapsedTime);
     } else if (this._game.character.dead) {
       if (this._game.lives.getValue()) this._newLife();

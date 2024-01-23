@@ -5,7 +5,7 @@ import { Move } from '../models/move.model';
 import { Position } from '../models/position.model';
 import { Sprite } from '../models/sprite.model';
 import { GameSpriteService } from './game-sprite.service';
-import { environment } from 'src/environments/environment';
+import { environment } from '../environments/environment';
 
 export class CharacterService {
   static frog(): Character {

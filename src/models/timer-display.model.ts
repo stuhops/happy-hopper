@@ -1,4 +1,4 @@
-import { GraphicService } from '../services/graphic/graphic.service';
+import { GraphicService } from '../services/graphic.service';
 import { CanvasContext } from './canvas-context.model';
 import { Clock } from './clock.model';
 import { Position } from './position.model';

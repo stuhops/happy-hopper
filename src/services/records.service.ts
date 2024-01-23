@@ -1,5 +1,5 @@
 import { HighScore } from '../models/high-score.model';
-import { environment } from 'src/environments/environment';
+import { environment } from '../environments/environment';
 
 export class RecordsService {
   static get highScores(): HighScore[] {
