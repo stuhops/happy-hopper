@@ -1,7 +1,7 @@
-import { BehaviorSubject } from 'rxjs';
 import { Character } from './character.model';
 import { Clock } from './clock.model';
 import { GameBoard } from './game-board.model';
+import { NumberRef } from './number-ref.model';
 
 export interface GameParams {
   // Required
@@ -31,9 +31,9 @@ export class Game {
   levels: number;
   waitTimer: Clock;
 
-  _score: BehaviorSubject<number>;
+  _score: NumberRef;
   level: number;
-  lives: BehaviorSubject<number>;
+  lives: NumberRef;
   won: boolean;
   gameOver: boolean;
   gameOverClock: Clock;
@@ -46,9 +46,9 @@ export class Game {
     this.character = params.character;
     this.board = params.board;
     this.waitTimer = new Clock({ timer: 0, initialTime: params.waitTimer ?? 1000 });
-    this._score = new BehaviorSubject<number>(params.score ?? 100);
+    this._score = new NumberRef(params.score ?? 100);
     this.level = params.level ?? 0;
-    this.lives = new BehaviorSubject<number>(params.lives ?? 3);
+    this.lives = new NumberRef(params.lives ?? 3);
     this.won = !!params.won;
     this.gameOver = !!params.gameOver;
     this.gameOverClock = params.gameOverClock ?? new Clock({ initialTime: 3000 });

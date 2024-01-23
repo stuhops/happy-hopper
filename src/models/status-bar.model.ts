@@ -1,9 +1,9 @@
-import { BehaviorSubject } from 'rxjs';
 import { environment } from '../environments/environment';
 import { GraphicService } from '../services/graphic.service';
 import { CanvasContext } from './canvas-context.model';
 import { Clock } from './clock.model';
 import { Coords } from './coords.model';
+import { NumberRef } from './number-ref.model';
 import { Position } from './position.model';
 import { SpriteSheet } from './sprite-sheet.model';
 import { Sprite } from './sprite.model';
@@ -13,8 +13,8 @@ import { WHSize } from './wh-size.model';
 
 export interface StatusBarParams {
   size: WHSize;
-  gameLives: BehaviorSubject<number>;
-  score: BehaviorSubject<number>;
+  gameLives: NumberRef;
+  score: NumberRef;
   gameClock: Clock;
   position?: { x: 0; y: 0 } | Coords;
 }
@@ -23,9 +23,9 @@ export class StatusBar {
   static LIVES_OFFSET: Coords = { x: 80, y: 0 };
   size: WHSize;
   position: Coords = { x: 0, y: 0 };
-  gameLives: BehaviorSubject<number>;
+  gameLives: NumberRef
   lives: StatusBarSpriteElement[] = [];
-  _score: BehaviorSubject<number>;
+  _score: NumberRef;
   timerDisplay!: TimerDisplay;
 
   constructor(params: StatusBarParams) {

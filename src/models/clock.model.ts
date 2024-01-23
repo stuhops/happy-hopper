@@ -1,4 +1,4 @@
-import { BehaviorSubject } from 'rxjs';
+import { NumberRef } from './number-ref.model';
 
 export interface ClockParams {
   timer?: 100000 | number;
@@ -7,11 +7,11 @@ export interface ClockParams {
 
 export class Clock {
   initialTime: number;
-  private _timer: BehaviorSubject<number>;
+  private _timer: NumberRef;
 
   constructor(params?: ClockParams) {
     this.initialTime = params?.initialTime ?? params?.timer ?? 100000;
-    this._timer = new BehaviorSubject<number>(params?.timer ?? this.initialTime);
+    this._timer = new NumberRef(params?.timer ?? this.initialTime);
   }
 
   deepCopy(): Clock {
